@@ -130,7 +130,7 @@ const Slots = () => {
       setLoading(true);
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/slots`, {
+      const response = await fetch(`${getRobotManagerBase()}/slots?order_by_field=updated_at&order_by_type=DESC`, {
         method: "GET",
         headers: {
           Authorization: token,
