@@ -235,6 +235,70 @@ const Slots = () => {
     setRowData(allData);
   };
 
+  const searchByTrayId = useCallback(async (trayId: string) => {
+    if (!trayId.trim()) {
+      setRowData(allData);
+      return;
+    }
+
+    try {
+      setSearching(true);
+      const token = getStoredAuthToken();
+      if (!token) return;
+
+      const response = await fetch(
+        `${getRobotManagerBase()}/slots?tray_id=${encodeURIComponent(trayId.trim())}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const records = data.records || [];
+        if (records.length > 0) {
+          setRowData(mapTags(records));
+          return;
+        }
+      }
+
+      const filtered = allData.filter((row) =>
+        row.tray_id?.toLowerCase().includes(trayId.trim().toLowerCase())
+      );
+      setRowData(filtered);
+    } catch {
+      const filtered = allData.filter((row) =>
+        row.tray_id?.toLowerCase().includes(trayId.trim().toLowerCase())
+      );
+      setRowData(filtered);
+    } finally {
+      setSearching(false);
+    }
+  }, [allData]);
+
+  const handleTraySearchChange = (value: string) => {
+    setTraySearch(value);
+    if (traySearchTimeoutRef.current) clearTimeout(traySearchTimeoutRef.current);
+
+    if (!value.trim()) {
+      setRowData(allData);
+      return;
+    }
+
+    traySearchTimeoutRef.current = setTimeout(() => {
+      searchByTrayId(value);
+    }, 500);
+  };
+
+  const clearTraySearch = () => {
+    setTraySearch("");
+    setRowData(allData);
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="Slots" />
