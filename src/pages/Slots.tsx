@@ -304,20 +304,38 @@ const Slots = () => {
       <AppHeader selectedTab="Slots" />
 
       <main className="p-2 sm:p-4">
-        {/* Slot ID Search Bar */}
-        <div className="mb-2 flex items-center gap-2">
+        {/* Search Bars */}
+        <div className="mb-2 flex items-center gap-2 flex-wrap">
           <div className="relative w-64">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search by Slot ID..."
               value={slotSearch}
-              onChange={(e) => handleSlotSearchChange(e.target.value)}
+              onChange={(e) => { handleSlotSearchChange(e.target.value); setTraySearch(""); }}
               className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-8 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
             />
             {slotSearch && (
               <button
                 onClick={clearSearch}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          <div className="relative w-64">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search by Tray ID..."
+              value={traySearch}
+              onChange={(e) => { handleTraySearchChange(e.target.value); setSlotSearch(""); }}
+              className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-8 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            />
+            {traySearch && (
+              <button
+                onClick={clearTraySearch}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 <X className="h-4 w-4" />

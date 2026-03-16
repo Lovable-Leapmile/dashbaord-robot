@@ -278,10 +278,10 @@ const Racks = () => {
         <div className="text-xs font-medium relative z-10" style={{ color: "#351c75" }}>
           {slot.slot_id}
         </div>
-        {!isInactive && (
+        {(!isInactive || slot.tray_id) && (
           <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-1" style={{ gap: "1px" }}>
             {slot.tray_id && <img src={trayImg} alt="Tray" className="w-[116px] h-[8px] sm:w-[146px] sm:h-[10px]" />}
-            {isStation && (
+            {!isInactive && isStation && (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
