@@ -77,7 +77,7 @@ const Trays = () => {
       setLoading(true);
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/trays`, {
+      const response = await fetch(`${getRobotManagerBase()}/trays?order_by_field=updated_at&order_by_type=DESC`, {
         method: "GET",
         headers: {
           Authorization: token,
