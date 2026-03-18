@@ -163,7 +163,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
                 </div>
               </SheetHeader>
               
-              <div className="py-2">
+              <div className="py-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 65px)' }}>
                 {/* Main Navigation */}
                 <div className="px-3 py-2">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Navigation</p>
