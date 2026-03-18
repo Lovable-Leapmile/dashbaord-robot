@@ -119,6 +119,8 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
     { label: "Reports", path: "/reports", active: isReportsPage },
   ];
 
+  const showAdminConsole = (import.meta.env.VITE_ADMIN_CONSOLE || "yes").toLowerCase() === "yes";
+
   const configTabs = [
     { label: "Robot", icon: Home, tab: "Robot" },
     { label: "Racks", icon: Layers, tab: "Racks" },
@@ -127,7 +129,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
     { label: "Station", icon: Building2, tab: "Station" },
     { label: "Extremes", icon: TrendingUp, tab: "Extremes" },
     { label: "APK Link", icon: Download, tab: "APK Link" },
-    { label: "Admin Console", icon: Shield, tab: "Admin Console" },
+    ...(showAdminConsole ? [{ label: "Admin Console", icon: Shield, tab: "Admin Console" }] : []),
   ];
 
   const taskTabs = [
