@@ -127,7 +127,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
     { label: "Station", icon: Building2, tab: "Station" },
     { label: "Extremes", icon: TrendingUp, tab: "Extremes" },
     { label: "APK Link", icon: Download, tab: "APK Link" },
-    { label: "Tablet App", icon: Shield, tab: "Tablet App" },
+    { label: "Admin Console", icon: Shield, tab: "Admin Console" },
   ];
 
   const taskTabs = [

@@ -108,7 +108,7 @@ const AdminConsole = () => {
             <iframe
               src={adminUrl}
               className="w-full h-full border-0 rounded-lg"
-              title="Tablet App"
+              title="Admin Console"
               onLoad={handleIframeLoad}
               onError={handleIframeError}
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation"
