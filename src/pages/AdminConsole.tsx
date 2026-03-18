@@ -101,7 +101,7 @@ const AdminConsole = () => {
               <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
                 <div className="text-center space-y-3">
                   <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent mx-auto"></div>
-                  <p className="text-sm text-muted-foreground">Loading Tablet App...</p>
+                  <p className="text-sm text-muted-foreground">Loading Admin Console...</p>
                 </div>
               </div>
             )}
