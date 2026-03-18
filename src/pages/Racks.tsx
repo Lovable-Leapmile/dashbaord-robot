@@ -33,6 +33,7 @@ const Racks = () => {
   const [row1Depth0Slots, setRow1Depth0Slots] = useState<Slot[]>([]);
   const [row0Depth1Slots, setRow0Depth1Slots] = useState<Slot[]>([]);
   const [row0Depth0Slots, setRow0Depth0Slots] = useState<Slot[]>([]);
+  const [robotNumDepths, setRobotNumDepths] = useState(0);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   const [slotDetails, setSlotDetails] = useState<SlotDetails | null>(null);
   const [activeStationSlotIds, setActiveStationSlotIds] = useState<Set<string>>(new Set());
