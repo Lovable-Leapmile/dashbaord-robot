@@ -46,7 +46,7 @@ const Trays = () => {
     { field: "tray_weight", headerName: "Weight (Kg)", sortable: true, filter: true, flex: 1,
       valueFormatter: (params) => {
         if (params.value === null || params.value === undefined) return "N/A";
-        return `${params.value}Kg`;
+        return `${(params.value / 1000).toFixed(3)}Kg`;
       },
     },
     {
