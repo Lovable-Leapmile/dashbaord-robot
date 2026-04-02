@@ -128,7 +128,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
     { label: "Slots", icon: Grid3X3, tab: "Slots" },
     { label: "Station", icon: Building2, tab: "Station" },
     { label: "Extremes", icon: TrendingUp, tab: "Extremes" },
-    { label: "APK Link", icon: Download, tab: "APK Link" },
+    ...(showAdminConsole ? [{ label: "APK Link", icon: Download, tab: "APK Link" }] : []),
     ...(showAdminConsole ? [{ label: "Admin Console", icon: Shield, tab: "Admin Console" }] : []),
   ];
 
