@@ -1,6 +1,5 @@
 import { ColDef, PostProcessPopupParams } from "ag-grid-community";
 import { format, isValid, parse, parseISO } from "date-fns";
-import AgGridDatePicker from "@/components/AgGridDatePicker";
 
 /**
  * Best-effort parsing for API date strings so AG Grid date filtering works reliably.
@@ -114,7 +113,7 @@ export const dateFilterParams = {
   inRangeFloatingFilterDateFormat: "dd-MM-yyyy",
   filterOptions: [
     "equals",
-    "notEqual",
+    "notEqual", 
     "lessThan",
     "greaterThan",
     "inRange",
@@ -123,7 +122,7 @@ export const dateFilterParams = {
   ],
   defaultOption: "equals",
   suppressAndOrCondition: false,
-  buttons: ["reset"],
+  buttons: ["apply", "reset", "cancel"],
 };
 
 export const formatDateTime12 = (value: unknown): string => {
@@ -241,9 +240,6 @@ export const getDefaultGridProps = () => ({
   ensureDomOrder: true,
   suppressMenuHide: true,
   icons: agGridCspSafeIcons,
-  components: {
-    agDateInput: AgGridDatePicker,
-  },
 });
 
 // Legacy export for backward compatibility
