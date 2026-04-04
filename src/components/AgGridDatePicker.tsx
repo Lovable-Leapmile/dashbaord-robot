@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useState, useCallback } from "react";
+import { forwardRef, useImperativeHandle, useState, useCallback, useRef } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -9,10 +9,12 @@ interface AgGridDatePickerProps {
 
 const AgGridDatePicker = forwardRef((props: AgGridDatePickerProps, ref) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const dateRef = useRef<Date | undefined>(undefined);
 
   const handleSelect = useCallback(
     (selected: Date | undefined) => {
       setDate(selected);
+      dateRef.current = selected;
       props.onDateChanged();
     },
     [props]
@@ -20,10 +22,12 @@ const AgGridDatePicker = forwardRef((props: AgGridDatePickerProps, ref) => {
 
   useImperativeHandle(ref, () => ({
     getDate() {
-      return date ?? null;
+      return dateRef.current ?? null;
     },
     setDate(newDate: Date | null) {
-      setDate(newDate ?? undefined);
+      const d = newDate ?? undefined;
+      dateRef.current = d;
+      setDate(d);
     },
   }));
 
