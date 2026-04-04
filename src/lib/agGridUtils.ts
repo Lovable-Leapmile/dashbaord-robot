@@ -241,6 +241,9 @@ export const getDefaultGridProps = () => ({
   ensureDomOrder: true,
   suppressMenuHide: true,
   icons: agGridCspSafeIcons,
+  components: {
+    agDateInput: AgGridDatePicker,
+  },
 });
 
 // Legacy export for backward compatibility
