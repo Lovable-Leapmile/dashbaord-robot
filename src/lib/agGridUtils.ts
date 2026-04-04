@@ -114,7 +114,7 @@ export const dateFilterParams = {
   inRangeFloatingFilterDateFormat: "dd-MM-yyyy",
   filterOptions: [
     "equals",
-    "notEqual", 
+    "notEqual",
     "lessThan",
     "greaterThan",
     "inRange",
@@ -123,7 +123,7 @@ export const dateFilterParams = {
   ],
   defaultOption: "equals",
   suppressAndOrCondition: false,
-  buttons: ["apply", "reset", "cancel"],
+  buttons: ["reset"],
 };
 
 export const formatDateTime12 = (value: unknown): string => {
