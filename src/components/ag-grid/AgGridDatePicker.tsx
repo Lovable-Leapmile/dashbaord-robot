@@ -24,6 +24,7 @@ const AgGridDatePicker = forwardRef<IDateComp, IDateParams>((params, ref) => {
   useImperativeHandle(
     ref,
     () => ({
+      getGui: () => calendarRef.current ?? document.createElement("div"),
       getDate: () => selectedDate,
       setDate: (date: Date | null) => {
         setSelectedDate(normalizeDate(date));
