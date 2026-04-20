@@ -118,13 +118,9 @@ const Monitor = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(
-        `/pubsub/subscribe?topic=STATUSMONITOR_EVENTS&num_records=1`,
+      const response = await authenticatedFetch(
+        getApiUrl(`/pubsub/subscribe?topic=STATUSMONITOR_EVENTS&num_records=1`),
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
           signal: abortControllerRef.current.signal,
         },
       );
