@@ -4,7 +4,7 @@ import AppHeader from "@/components/AppHeader";
 import { Input } from "@/components/ui/input";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getCameraManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImg from "@/assets/no_records.png";
 import {
@@ -77,7 +77,7 @@ const Camera = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getCameraManagerBase()}/camera_events/tasks`, {
+      const response = await authenticatedFetch(getApiUrl(`/cameramanager/camera_events/tasks`), {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",

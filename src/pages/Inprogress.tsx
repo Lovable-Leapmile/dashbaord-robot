@@ -7,7 +7,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef, ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getRobotManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImage from "@/assets/no_records.png";
 import { createDateColumnDef, getDefaultGridProps } from "@/lib/agGridUtils";
@@ -102,7 +102,7 @@ const Inprogress = () => {
       setLoading(true);
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/task?task_status=inprogress`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/task?task_status=inprogress`), {
         method: "GET",
         headers: {
           Authorization: token,

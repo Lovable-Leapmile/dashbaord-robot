@@ -7,7 +7,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef, ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getNanostoreBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImage from "@/assets/no_records.png";
 import { getDefaultGridProps } from "@/lib/agGridUtils";
@@ -86,7 +86,7 @@ const Extremes = () => {
       setLoading(true);
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getNanostoreBase()}/items/usage?order_by=DESC`, {
+      const response = await authenticatedFetch(getApiUrl(`/nanostore/items/usage?order_by=DESC`), {
         method: "GET",
         headers: {
           Authorization: token,

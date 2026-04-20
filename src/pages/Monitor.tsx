@@ -3,7 +3,7 @@ import AppHeader from "@/components/AppHeader";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
-import { getPubSubBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImg from "@/assets/no_records.png";
 
@@ -119,7 +119,7 @@ const Monitor = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       const response = await fetch(
-        `${getPubSubBase()}/subscribe?topic=STATUSMONITOR_EVENTS&num_records=1`,
+        `/pubsub/subscribe?topic=STATUSMONITOR_EVENTS&num_records=1`,
         {
           headers: {
             "Content-Type": "application/json",

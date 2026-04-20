@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { getDefaultGridProps } from "@/lib/agGridUtils";
-import { getCameraManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImage from "@/assets/no_records.png";
 
@@ -59,7 +59,7 @@ const CameraTaskDetails = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       const response = await fetch(
-        `${getCameraManagerBase()}/camera_events?clip_status=ready&task_id=${task_id}`,
+        `/cameramanager/camera_events?clip_status=ready&task_id=${task_id}`,
         {
           headers: {
             Authorization: token,

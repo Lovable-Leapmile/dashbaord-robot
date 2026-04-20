@@ -6,7 +6,7 @@ import { DashboardCards } from "@/components/DashboardCards";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { useShuttlePubSub } from "@/hooks/useShuttlePubSub";
 import { getStoredAuthToken } from "@/lib/auth";
-import { getRobotManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import {
   Tooltip,
   TooltipContent,
@@ -226,7 +226,7 @@ const Home = () => {
       const token = getStoredAuthToken();
       if (!token) return;
 
-      const response = await fetch(`${getRobotManagerBase()}/robots`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/robots`), {
         method: "GET",
         headers: {
           Authorization: token,

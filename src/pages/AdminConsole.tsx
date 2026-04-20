@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppHeader from "@/components/AppHeader";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getAdminConsoleUrl } from "@/lib/api";
+import { getAdminConsoleUrl, getApiUrl, authenticatedFetch } from "@/lib/api";
 import { Settings } from "lucide-react";
 
 const AdminConsole = () => {

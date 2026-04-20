@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { getStoredAuthToken } from "@/lib/auth";
-import { getPubSubBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredApiConfig } from "@/lib/apiConfig";
 
 export interface ShuttleState {
@@ -120,7 +120,7 @@ export const useShuttlePubSub = () => {
       const topic = `${apiConfig.apiName}_${robotname}`;
       
       const response = await fetch(
-        `${getPubSubBase()}/subscribe?topic=${encodeURIComponent(topic)}&num_records=4`,
+        `/pubsub/subscribe?topic=${encodeURIComponent(topic)}&num_records=4`,
         {
           method: "GET",
           headers: {

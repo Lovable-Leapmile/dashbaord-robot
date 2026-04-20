@@ -8,7 +8,7 @@ import { ColDef, ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getPubSubBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import { getStoredApiConfig } from "@/lib/apiConfig";
 import noRecordsImage from "@/assets/no_records.png";

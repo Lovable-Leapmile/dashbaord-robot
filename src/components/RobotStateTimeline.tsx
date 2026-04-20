@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, Dot } from "recharts";
-import { getRobotManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 
 interface RobotState {
@@ -46,7 +46,7 @@ export const RobotStateTimeline = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       const response = await fetch(
-        `${getRobotManagerBase()}/robot_state?today=true&num_records=100&offset=0`,
+        `/robotmanager/robot_state?today=true&num_records=100&offset=0`,
         {
           method: "GET",
           headers: {

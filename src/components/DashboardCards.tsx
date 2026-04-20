@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Bot, Package, Layers, Zap, RefreshCw } from "lucide-react";
-import { getRobotManagerBase, getNanostoreBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 
 interface RobotInfo {
@@ -79,7 +79,7 @@ export const DashboardCards = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/robots`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/robots`), {
         headers: { "Authorization": token, "Content-Type": "application/json" }
       });
       const data = await response.json();
@@ -97,10 +97,10 @@ export const DashboardCards = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       const [slotsResponse, traysResponse] = await Promise.all([
-        fetch(`${getRobotManagerBase()}/slots_count?slot_status=active`, {
+        authenticatedFetch(getApiUrl(`/robotmanager/slots_count?slot_status=active`), {
           headers: { "Authorization": token, "Content-Type": "application/json" }
         }),
-        fetch(`${getRobotManagerBase()}/trays?tray_status=active`, {
+        authenticatedFetch(getApiUrl(`/robotmanager/trays?tray_status=active`), {
           headers: { "Authorization": token, "Content-Type": "application/json" }
         })
       ]);
@@ -124,10 +124,10 @@ export const DashboardCards = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       const [occupiedResponse, freeResponse] = await Promise.all([
-        fetch(`${getNanostoreBase()}/occupied_trays?occupied=true`, {
+        authenticatedFetch(getApiUrl(`/nanostore/occupied_trays?occupied=true`), {
           headers: { "Authorization": token, "Content-Type": "application/json" }
         }),
-        fetch(`${getNanostoreBase()}/occupied_trays?occupied=false`, {
+        authenticatedFetch(getApiUrl(`/nanostore/occupied_trays?occupied=false`), {
           headers: { "Authorization": token, "Content-Type": "application/json" }
         })
       ]);
@@ -151,14 +151,14 @@ export const DashboardCards = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       // First try to fetch today's data
-      let response = await fetch(`${getRobotManagerBase()}/robot_power?today=true&num_records=1`, {
+      let response = await authenticatedFetch(getApiUrl(`/robotmanager/robot_power?today=true&num_records=1`), {
         headers: { "Authorization": token, "Content-Type": "application/json" }
       });
       let data = await response.json();
       
       // If today's data is not available, fetch the most recent data regardless of date
       if (data.status !== "success" || !data.records || data.records.length === 0) {
-        response = await fetch(`${getRobotManagerBase()}/robot_power?num_records=1`, {
+        response = await authenticatedFetch(getApiUrl(`/robotmanager/robot_power?num_records=1`), {
           headers: { "Authorization": token, "Content-Type": "application/json" }
         });
         data = await response.json();

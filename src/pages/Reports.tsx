@@ -7,7 +7,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef, ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { apiGet, getNanostoreBase, getRobotManagerBase, withQuery } from "@/lib/api";
+import { apiGet, withQuery, getApiUrl, authenticatedFetch } from "@/lib/api";
 import noRecordsImage from "@/assets/no_records.png";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RefreshCw, Download } from "lucide-react";
@@ -275,7 +275,7 @@ const Reports = () => {
       order_by_field: "updated_at",
       order_by_type: "DESC",
     };
-    const url = withQuery(`${getNanostoreBase()}/trays_for_order`, params);
+    const url = withQuery(`/nanostore/trays_for_order`, params);
     const { data } = await apiGet<any>(url);
 
     if (data.status === "success" && data.count !== 0) {
@@ -300,7 +300,7 @@ const Reports = () => {
       order_by_field: "updated_at",
       order_by_type: "DESC",
     };
-    const url = withQuery(`${getNanostoreBase()}/transactions`, params);
+    const url = withQuery(`/nanostore/transactions`, params);
     const { data } = await apiGet<any>(url);
 
     if (data.status === "success") {
@@ -327,7 +327,7 @@ const Reports = () => {
       order_by_field: "updated_at",
       order_by_type: "DESC",
     };
-    const url = withQuery(`${getNanostoreBase()}/orders`, params);
+    const url = withQuery(`/nanostore/orders`, params);
     const { data } = await apiGet<any>(url);
 
     if (data.status === "success") {
@@ -352,7 +352,7 @@ const Reports = () => {
       order_by_field: "updated_at",
       order_by_type: "DESC",
     };
-    const url = withQuery(`${getNanostoreBase()}/trays_for_order`, params);
+    const url = withQuery(`/nanostore/trays_for_order`, params);
     const { data } = await apiGet<any>(url);
 
     if (data.status === "success") {
@@ -406,7 +406,7 @@ const Reports = () => {
   // Fetch Rack Transaction (matching Python get_robotTransactionHistory)
   const fetchRackTransaction = async (): Promise<any[]> => {
     // First get robot info to know total racks and slots per rack
-    const robotUrl = `${getRobotManagerBase()}/robots`;
+    const robotUrl = `/robotmanager/robots`;
     const { data: robotData } = await apiGet<any>(robotUrl);
 
     if (robotData.status !== "success" || !robotData.records?.length) {
@@ -425,7 +425,7 @@ const Reports = () => {
 
     // Fetch slots for each rack
     for (let rack = 0; rack < totalRacks; rack++) {
-      const slotsUrl = withQuery(`${getRobotManagerBase()}/slots`, { rack: rack.toString() });
+      const slotsUrl = withQuery(`/robotmanager/slots`, { rack: rack.toString() });
       const { data: slotsData } = await apiGet<any>(slotsUrl);
 
       let occupiedSlots = 0;
@@ -457,7 +457,7 @@ const Reports = () => {
     const params = {
       num_records: "100000000",
     };
-    const url = withQuery(`${getNanostoreBase()}/order_failure`, params);
+    const url = withQuery(`/nanostore/order_failure`, params);
     const { data } = await apiGet<any>(url);
 
     if (data.status === "success") {

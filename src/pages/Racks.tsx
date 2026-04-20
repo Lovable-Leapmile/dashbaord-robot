@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppHeader from "@/components/AppHeader";
 import SlotDetailsPanel from "@/components/SlotDetailsPanel";
 import { useAuthSession } from "@/hooks/useAuthSession";
-import { getRobotManagerBase } from "@/lib/api";
+import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import blockImg from "@/assets/block.png";
@@ -82,7 +82,7 @@ const Racks = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/task?task_status=inprogress`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/task?task_status=inprogress`), {
         method: "GET",
         headers: {
           Authorization: token,
@@ -111,7 +111,7 @@ const Racks = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(`${getRobotManagerBase()}/robots`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/robots`), {
         method: "GET",
         headers: {
           Authorization: token,
@@ -180,7 +180,7 @@ const Racks = () => {
   const fetchAllSlots = async (rackValue: number) => {
     const token = getStoredAuthToken();
     if (!token) return;
-    const robotManagerBase = getRobotManagerBase();
+    const robotManagerBase = "/robotmanager";
 
     try {
       const [res1, res2, res3, res4] = await Promise.all([
@@ -221,7 +221,7 @@ const Racks = () => {
     if (!token) return;
 
     try {
-      const response = await fetch(`${getRobotManagerBase()}/slots?slot_id=${slotId}`, {
+      const response = await authenticatedFetch(getApiUrl(`/robotmanager/slots?slot_id=${slotId}`), {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
