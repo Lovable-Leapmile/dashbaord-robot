@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { storeAuthToken } from "@/lib/auth";
 import { secureStorage } from "@/lib/secureStorage";
-import { getApiUrl, authenticatedFetch } from "@/lib/api";
+import { getApiUrl } from "@/lib/api";
 import { Eye, EyeOff } from "lucide-react";
 import { useLoginLogo } from "@/hooks/useTheme";
 import loginIllustration from "@/assets/login.gif";
