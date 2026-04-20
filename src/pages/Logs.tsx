@@ -282,26 +282,21 @@ const Logs = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       
-      // Read apiname from api_config and robotname from localStorage
+      // Read robotname from localStorage; base URL comes from VITE_BASE_URL via getApiUrl
       const apiConfig = getStoredApiConfig();
       const robotname = localStorage.getItem("robotname") || "";
-      
-      if (!apiConfig || !robotname) {
+      const apiname = apiConfig?.apiName || "";
+
+      if (!robotname || !apiname) {
         setLoading(false);
         return;
       }
-      
-      const apiname = apiConfig.apiName;
-      
-      // Construct dynamic endpoint: https://[apiname].leapmile.com/pubsub/subscribe?topic=apiname_robotname
-      const endpoint = `https://${apiname}.leapmile.com/pubsub/subscribe?topic=${apiname}_${robotname}`;
-      
-      const response = await fetch(endpoint, {
+
+      // Construct topic apiname_robotname; URL uses VITE_BASE_URL
+      const endpoint = getApiUrl(`/pubsub/subscribe?topic=${apiname}_${robotname}`);
+
+      const response = await authenticatedFetch(endpoint, {
         method: "GET",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
       });
 
       const data = await response.json();

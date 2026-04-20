@@ -119,14 +119,10 @@ export const useShuttlePubSub = () => {
       // Construct dynamic topic: ${apiname}_${robotname}
       const topic = `${apiConfig.apiName}_${robotname}`;
       
-      const response = await fetch(
-        `/pubsub/subscribe?topic=${encodeURIComponent(topic)}&num_records=4`,
+      const response = await authenticatedFetch(
+        getApiUrl(`/pubsub/subscribe?topic=${encodeURIComponent(topic)}&num_records=4`),
         {
           method: "GET",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
           signal: abortControllerRef.current.signal,
         }
       );
