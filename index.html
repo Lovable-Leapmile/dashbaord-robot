@@ -6,10 +6,10 @@
     <!--
       CSP should be configured on the hosting server via HTTP headers.
       Required directives for AG Grid icons and React:
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
         font-src 'self' https://fonts.gstatic.com data:;
-        img-src 'self' data: blob: https:;
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:;
+        img-src 'self' data: blob:;
+        script-src https://www.googletagmanager.com 'self' 'unsafe-inline' 'unsafe-eval' blob:;
         connect-src 'self' https: wss:;
     -->
     <link rel="icon" type="image/png" href="/favicon.png" />
