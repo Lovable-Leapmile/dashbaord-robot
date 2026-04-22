@@ -93,11 +93,20 @@ export const getApiUrl = (path: string): string => {
  * @returns Promise<Response>
  */
 export const authenticatedFetch = async (url: string, options: RequestInit = {}) => {
-  const authToken = sessionStorage.getItem("authToken");
+  // Prefer the secureStorage-backed token (set at login via storeAuthToken),
+  // fall back to legacy sessionStorage entry for older sessions.
+  const storedToken = getStoredAuthToken();
+  const legacyToken = sessionStorage.getItem("authToken");
+  const authToken = storedToken || legacyToken;
 
   const headers = new Headers(options.headers || {});
   if (authToken && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${authToken}`);
+    // getStoredAuthToken already returns a value normalized with the
+    // "Bearer " prefix; only add it for the legacy raw token.
+    const value = storedToken
+      ? storedToken
+      : `Bearer ${legacyToken}`;
+    headers.set("Authorization", value);
   }
 
   // If url is just a path (starts with /), prepend the API origin
