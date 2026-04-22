@@ -45,8 +45,8 @@ export const RobotStateTimeline = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(
-        `/robotmanager/robot_state?today=true&num_records=100&offset=0`,
+      const response = await authenticatedFetch(
+        getApiUrl(`/robotmanager/robot_state?today=true&num_records=100&offset=0`),
         {
           method: "GET",
           headers: {

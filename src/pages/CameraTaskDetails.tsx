@@ -58,8 +58,8 @@ const CameraTaskDetails = () => {
     try {
       const token = getStoredAuthToken();
       if (!token) return;
-      const response = await fetch(
-        `/cameramanager/camera_events?clip_status=ready&task_id=${task_id}`,
+      const response = await authenticatedFetch(
+        getApiUrl(`/cameramanager/camera_events?clip_status=ready&task_id=${task_id}`),
         {
           headers: {
             Authorization: token,

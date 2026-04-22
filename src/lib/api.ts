@@ -32,7 +32,9 @@ export const ROBOTMANAGER_BASE = ""; // Deprecated - use getRobotManagerBase()
 export const NANOSTORE_BASE = ""; // Deprecated - use getNanostoreBase()
 
 export const withQuery = (url: string, params: Record<string, string | number | null | undefined>) => {
-  const u = new URL(url);
+  // Resolve relative paths against the configured API origin
+  const fullUrl = url.startsWith("http") ? url : getApiUrl(url);
+  const u = new URL(fullUrl);
   Object.entries(params).forEach(([k, v]) => {
     if (v === undefined || v === null || v === "") return;
     u.searchParams.set(k, String(v));
@@ -56,7 +58,10 @@ export const apiFetch = async (url: string, options: ApiFetchOptions = {}) => {
     h.set("Authorization", token);
   }
 
-  return fetch(url, {
+  // Resolve relative paths against the configured API origin
+  const fullUrl = url.startsWith("http") ? url : getApiUrl(url);
+
+  return fetch(fullUrl, {
     ...rest,
     headers: h,
   });
