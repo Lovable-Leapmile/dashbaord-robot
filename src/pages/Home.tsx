@@ -21,7 +21,10 @@ interface ActionHistoryItem {
   action: string;
   timestamp: Date;
   trayId: string | null;
+  row: number | null;
+  rack: number | null;
   slot: number | null;
+  depth: number | null;
 }
 
 // Constants for shuttle animation
@@ -176,16 +179,36 @@ const Home = () => {
           action: shuttleState.shuttle_action!,
           timestamp: new Date(),
           trayId: shuttleState.shuttle_move_tray,
-          slot: shuttleState.destination_name,
+          row: shuttleState.store_row >= 0 ? shuttleState.store_row : shuttleState.shuttle_move_row,
+          rack: shuttleState.store_rack ?? shuttleState.shuttle_move_rack,
+          slot: shuttleState.store_slot ?? shuttleState.destination_name,
+          depth: shuttleState.store_depth,
         };
-        // Avoid duplicates for same action
-        if (prev.length > 0 && prev[0].action === newItem.action && prev[0].trayId === newItem.trayId) {
+        // Avoid duplicates for same action+position
+        if (
+          prev.length > 0 &&
+          prev[0].action === newItem.action &&
+          prev[0].row === newItem.row &&
+          prev[0].rack === newItem.rack &&
+          prev[0].slot === newItem.slot &&
+          prev[0].depth === newItem.depth
+        ) {
           return prev;
         }
         return [newItem, ...prev].slice(0, 5);
       });
     }
-  }, [shuttleState.shuttle_action, shuttleState.shuttle_move_tray, shuttleState.destination_name]);
+  }, [
+    shuttleState.shuttle_action,
+    shuttleState.shuttle_move_tray,
+    shuttleState.store_row,
+    shuttleState.store_rack,
+    shuttleState.store_slot,
+    shuttleState.store_depth,
+    shuttleState.destination_name,
+    shuttleState.shuttle_move_row,
+    shuttleState.shuttle_move_rack,
+  ]);
 
   // Get status color based on action
   const getStatusColor = (action: string | null) => {
@@ -627,11 +650,17 @@ const Home = () => {
                             })}
                           </span>
                         </div>
-                        <div className="text-[9px] text-muted-foreground mt-0.5 pl-3">
-                          {item.trayId ? (
-                            <span>Tray: <span className="font-medium text-foreground">{item.trayId}</span> → Slot <span className="font-medium text-foreground">{item.slot ?? "N/A"}</span></span>
-                          ) : (
-                            <span>No tray info</span>
+                        <div className="text-[9px] text-muted-foreground mt-0.5 pl-3 space-y-0.5">
+                          <div>
+                            Row: <span className="font-medium text-foreground">{item.row ?? "—"}</span>
+                            {" · "}Rack: <span className="font-medium text-foreground">{item.rack ?? "—"}</span>
+                          </div>
+                          <div>
+                            Slot: <span className="font-medium text-foreground">{item.slot ?? "—"}</span>
+                            {" · "}Depth: <span className="font-medium text-foreground">{item.depth ?? "—"}</span>
+                          </div>
+                          {item.trayId && (
+                            <div>Tray: <span className="font-medium text-foreground">{item.trayId}</span></div>
                           )}
                         </div>
                       </div>
