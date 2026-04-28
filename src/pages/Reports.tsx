@@ -26,18 +26,29 @@ type ReportType =
   | "order_failure_transaction";
 
 // Format date as YYYY-MM-DD HH:mm (matching Python logic)
+// Parse the timestamp string directly without timezone conversion to preserve the API's reported time.
 const formatDateTime = (value: string | null | undefined): string => {
   if (!value) return "";
   try {
+    // Match "YYYY-MM-DDTHH:mm" or "YYYY-MM-DD HH:mm" with optional seconds/fractions
+    const match = String(value).match(
+      /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/,
+    );
+    if (match) {
+      const [, year, month, day, hours, minutes] = match;
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+    // Fallback: use Date but without timezone shift
     const date = new Date(value);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
+    if (isNaN(date.getTime())) return String(value);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   } catch {
-    return value;
+    return String(value);
   }
 };
 
