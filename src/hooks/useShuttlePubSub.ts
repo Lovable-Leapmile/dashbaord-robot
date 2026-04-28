@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { getStoredAuthToken } from "@/lib/auth";
 import { getApiUrl, authenticatedFetch } from "@/lib/api";
-import { getStoredApiConfig } from "@/lib/apiConfig";
+import { getStoredApiConfig, getApiName } from "@/lib/apiConfig";
 
 export interface ShuttleState {
   // Initial data from first record
@@ -106,18 +106,31 @@ export const useShuttlePubSub = () => {
     try {
       setIsLoading(true);
       
-      // Get dynamic apiname and robotname from localStorage
+      // Resolve apiname from VITE_BASE_URL or stored config
       const apiConfig = getStoredApiConfig();
-      const robotname = localStorage.getItem("robotname");
-      
-      if (!apiConfig || !robotname) {
-        // Fallback or skip if not configured yet
+      const apiname = getApiName() || apiConfig?.apiName || "";
+      let robotname = localStorage.getItem("robotname") || "";
+
+      // Fallback: recover robot_name via robots API
+      if (!robotname && apiname) {
+        try {
+          const r = await authenticatedFetch(getApiUrl(`/robotmanager/robots`));
+          const j = await r.json();
+          const rn = j?.records?.[0]?.robot_name;
+          if (rn) {
+            localStorage.setItem("robotname", rn);
+            robotname = rn;
+          }
+        } catch { /* ignore */ }
+      }
+
+      if (!apiname || !robotname) {
         setIsLoading(false);
         return;
       }
-      
+
       // Construct dynamic topic: ${apiname}_${robotname}
-      const topic = `${apiConfig.apiName}_${robotname}`;
+      const topic = `${apiname}_${robotname}`;
       
       const response = await authenticatedFetch(
         getApiUrl(`/pubsub/subscribe?topic=${encodeURIComponent(topic)}&num_records=4`),

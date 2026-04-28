@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
-import { getStoredApiConfig } from "@/lib/apiConfig";
+import { getStoredApiConfig, getApiName } from "@/lib/apiConfig";
 import noRecordsImage from "@/assets/no_records.png";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -282,10 +282,23 @@ const Logs = () => {
       const token = getStoredAuthToken();
       if (!token) return;
       
-      // Read robotname from localStorage; base URL comes from VITE_BASE_URL via getApiUrl
+      // Resolve apiname from VITE_BASE_URL (preferred) or stored config; robotname from localStorage
       const apiConfig = getStoredApiConfig();
-      const robotname = localStorage.getItem("robotname") || "";
-      const apiname = apiConfig?.apiName || "";
+      const apiname = getApiName() || apiConfig?.apiName || "";
+      let robotname = localStorage.getItem("robotname") || "";
+
+      // Fallback: fetch robots list to recover robot_name if missing
+      if (!robotname && apiname) {
+        try {
+          const r = await authenticatedFetch(getApiUrl(`/robotmanager/robots`));
+          const j = await r.json();
+          const rn = j?.records?.[0]?.robot_name;
+          if (rn) {
+            localStorage.setItem("robotname", rn);
+            robotname = rn;
+          }
+        } catch { /* ignore */ }
+      }
 
       if (!robotname || !apiname) {
         setLoading(false);
