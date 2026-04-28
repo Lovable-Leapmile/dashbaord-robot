@@ -213,7 +213,6 @@ const Reports = () => {
 
   // Rack Transaction columns (matching Python: Transaction Date, Rack, Occupied Slots, Free Slots, Rack Occupancy in %)
   const rackTransactionColumns: ColDef[] = [
-    createDateColumnDef("transaction_date", "Transaction Date", { flex: 1, minWidth: 150, valueFormatter: (p) => p.value ?? "N/A" }),
     { field: "rack", headerName: "Rack", flex: 1, minWidth: 120, valueFormatter: (p) => p.value ?? "N/A" },
     {
       field: "occupied_slots",
