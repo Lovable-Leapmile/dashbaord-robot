@@ -36,8 +36,9 @@ const toLabel = (key: string): string => {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
-// Highlighted fields shown first when present
-const PRIORITY_KEYS = ["ROBOT_ID", "SUPERVISOR STATUS"];
+// Detect ISO/datetime-like values dynamically (no hardcoded keys)
+const isDateLike = (v: string): boolean =>
+  /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(v);
 
 interface StatusCardProps {
   fieldKey: string;
