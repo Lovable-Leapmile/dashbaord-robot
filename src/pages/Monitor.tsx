@@ -151,7 +151,7 @@ const Monitor = () => {
   useEffect(() => {
     fetchStatus();
 
-    const intervalId = setInterval(fetchStatus, 500);
+    const intervalId = setInterval(fetchStatus, 2000);
 
     return () => {
       clearInterval(intervalId);
