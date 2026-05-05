@@ -2,11 +2,37 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppHeader from "@/components/AppHeader";
 import { Input } from "@/components/ui/input";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal, Clock } from "lucide-react";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImg from "@/assets/no_records.png";
+import { format, formatDistanceToNowStrict, isToday, isYesterday } from "date-fns";
+
+const formatLastUpdated = (value?: string): string => {
+  if (!value) return "N/A";
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return "N/A";
+  if (isToday(d)) return format(d, "hh:mm a");
+  if (isYesterday(d)) return "Yesterday";
+  return format(d, "dd MMM yyyy");
+};
+
+const formatRelative = (value?: string): string => {
+  if (!value) return "—";
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return "—";
+  const diffMs = Date.now() - d.getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return "Just now";
+  if (mins < 60) return `${mins} min${mins > 1 ? "s" : ""} ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "Yesterday";
+  if (days < 7) return `${days} days ago`;
+  return formatDistanceToNowStrict(d, { addSuffix: true });
+};
 import {
   DropdownMenu,
   DropdownMenuContent,
