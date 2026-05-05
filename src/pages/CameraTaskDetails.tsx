@@ -154,8 +154,8 @@ const CameraTaskDetails = () => {
       flex: 1,
       minWidth: 140,
       valueGetter: (params: any) => params.data?.clip_start_time,
-      valueFormatter: (params: any) => {
-        const v = params.value;
+      cellRenderer: (params: any) => {
+        const v = params.data?.clip_start_time;
         if (!v) return "—";
         const d = new Date(typeof v === "string" ? v.replace(" ", "T") : v);
         if (isNaN(d.getTime())) return "—";
