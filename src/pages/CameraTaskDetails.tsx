@@ -200,9 +200,10 @@ const CameraTaskDetails = () => {
       colId: "start_time_relative",
       flex: 1,
       minWidth: 140,
-      valueGetter: (params: any) => params.data?.last_updated || params.data?.updated_at || params.data?.clip_start_time,
-      cellRenderer: (params: any) => {
-        const updatedValue = params.data?.last_updated || params.data?.updated_at || params.data?.clip_start_time;
+      valueGetter: (params: ValueGetterParams<CameraEvent>) =>
+        params.data?.last_updated || params.data?.updated_at || taskLastUpdated || params.data?.clip_start_time,
+      cellRenderer: (params: ICellRendererParams<CameraEvent>) => {
+        const updatedValue = params.data?.last_updated || params.data?.updated_at || taskLastUpdated || params.data?.clip_start_time;
         return formatRelativeTime(updatedValue);
       },
     },
@@ -227,7 +228,8 @@ const CameraTaskDetails = () => {
     {
       headerName: "View",
       width: 100,
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: ICellRendererParams<CameraEvent>) => {
+        if (!params.data) return null;
         const isVideo = params.data.clip_filename?.toLowerCase().endsWith(".mp4");
         return (
           <button
@@ -255,9 +257,9 @@ const CameraTaskDetails = () => {
     {
       headerName: "Download",
       width: 120,
-      cellRenderer: (params: any) => (
+      cellRenderer: (params: ICellRendererParams<CameraEvent>) => (
         <button
-          onClick={() => handleDownloadClick(params.data.clip_url)}
+          onClick={() => params.data && handleDownloadClick(params.data.clip_url)}
           className="flex items-center justify-center w-full h-full group"
         >
           <div className="p-2 rounded-full bg-primary/10 group-hover:bg-primary group-hover:scale-110 transition-all duration-200">
