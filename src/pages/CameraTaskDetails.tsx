@@ -150,10 +150,10 @@ const CameraTaskDetails = () => {
     },
     {
       headerName: "When",
-      field: "clip_start_time",
       colId: "start_time_relative",
       flex: 1,
       minWidth: 140,
+      valueGetter: (params: any) => params.data?.clip_start_time,
       valueFormatter: (params: any) => {
         const v = params.value;
         if (!v) return "—";
