@@ -38,8 +38,13 @@ interface CameraTaskSummary {
 
 const formatDateTime = (value?: string): string => {
   if (!value) return "—";
-  const d = new Date(typeof value === "string" ? value.replace(" ", "T") : value);
-  if (isNaN(d.getTime())) return "—";
+  const rawValue = String(value);
+  const normalizedValue = rawValue
+    .trim()
+    .replace(" ", "T")
+    .replace(/([+-]\d{2})$/, "$1:00");
+  const d = new Date(normalizedValue);
+  if (isNaN(d.getTime())) return rawValue;
   return format(d, "d/M/yyyy hh:mm:ss a");
 };
 
