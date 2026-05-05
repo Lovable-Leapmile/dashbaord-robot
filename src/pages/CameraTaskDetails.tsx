@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AppHeader from "@/components/AppHeader";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import type { ColDef, ICellRendererParams, ValueGetterParams } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz-no-font.css";
 import { Play, Download, ArrowLeft, RefreshCw, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
@@ -27,6 +28,11 @@ interface CameraEvent {
   clip_url: string;
   last_updated?: string;
   updated_at?: string;
+}
+
+interface CameraTaskSummary {
+  task_id: string | null;
+  last_updated?: string;
 }
 
 const formatRelativeTime = (value?: string): string => {
