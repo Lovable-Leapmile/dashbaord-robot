@@ -64,10 +64,12 @@ const CameraTaskDetails = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [taskLastUpdated, setTaskLastUpdated] = useState<string>();
 
   useEffect(() => {
     if (taskId) {
       fetchCameraEvents(taskId);
+      fetchTaskLastUpdated(taskId);
     }
   }, [taskId]);
 
@@ -102,6 +104,24 @@ const CameraTaskDetails = () => {
       console.error("Error fetching camera events:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTaskLastUpdated = async (task_id: string) => {
+    try {
+      const token = getStoredAuthToken();
+      if (!token) return;
+      const response = await authenticatedFetch(getApiUrl(`/cameramanager/camera_events/tasks`), {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      const task = data.records?.find((record: CameraTaskSummary) => record.task_id === task_id);
+      setTaskLastUpdated(task?.last_updated);
+    } catch (error) {
+      console.error("Error fetching task last updated:", error);
     }
   };
 
