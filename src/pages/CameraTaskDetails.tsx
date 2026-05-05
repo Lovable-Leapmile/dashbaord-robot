@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { getDefaultGridProps } from "@/lib/agGridUtils";
+import { format } from "date-fns";
 import { getApiUrl, authenticatedFetch } from "@/lib/api";
 import { getStoredAuthToken } from "@/lib/auth";
 import noRecordsImage from "@/assets/no_records.png";
@@ -34,6 +35,13 @@ interface CameraTaskSummary {
   task_id: string | null;
   last_updated?: string;
 }
+
+const formatDateTime = (value?: string): string => {
+  if (!value) return "—";
+  const d = new Date(typeof value === "string" ? value.replace(" ", "T") : value);
+  if (isNaN(d.getTime())) return "—";
+  return format(d, "d/M/yyyy hh:mm:ss a");
+};
 
 const formatRelativeTime = (value?: string): string => {
   if (!value) return "—";
@@ -194,6 +202,7 @@ const CameraTaskDetails = () => {
       field: "clip_start_time",
       flex: 1,
       minWidth: 180,
+      valueFormatter: (params) => formatDateTime(params.value),
     },
     {
       headerName: "When",
@@ -212,6 +221,7 @@ const CameraTaskDetails = () => {
       field: "clip_stop_time",
       flex: 1,
       minWidth: 180,
+      valueFormatter: (params) => formatDateTime(params.value),
     },
     {
       headerName: "File Name",
