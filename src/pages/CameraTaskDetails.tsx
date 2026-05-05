@@ -307,6 +307,7 @@ const CameraTaskDetails = () => {
               rowHeight={35}
               pagination={true}
               paginationPageSize={50}
+              paginationPageSizeSelector={[50, 100, 200]}
               domLayout="normal"
               {...getDefaultGridProps()}
             />
