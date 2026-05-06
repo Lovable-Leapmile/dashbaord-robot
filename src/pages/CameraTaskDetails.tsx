@@ -95,10 +95,12 @@ const CameraTaskDetails = () => {
     if (!value) return null;
     const raw = String(value).trim();
 
-    const clipDateMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})[- T](\d{2}):(\d{2}):(\d{2})/);
-    if (clipDateMatch) {
-      const [, year, month, day, hour, minute, second] = clipDateMatch;
-      return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
+    // Match: YYYY-MM-DD[ T-]HH:MM:SS with optional fractional seconds (any length, Firefox-safe)
+    const fullMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})[- T](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?/);
+    if (fullMatch) {
+      const [, year, month, day, hour, minute, second, frac] = fullMatch;
+      const ms = frac ? Number(frac.slice(0, 3).padEnd(3, "0")) : 0;
+      return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second), ms);
     }
 
     let d = new Date(raw);
@@ -111,7 +113,10 @@ const CameraTaskDetails = () => {
 
   const filteredEvents = events.filter((event) => {
     if (!dateRange?.from && !dateRange?.to) return true;
-    const d = parseEventDate(event.clip_start_time);
+    const d =
+      parseEventDate(event.created_at) ||
+      parseEventDate(event.updated_at) ||
+      parseEventDate(event.clip_start_time);
     if (!d) return false;
     if (dateRange.from) {
       const from = new Date(dateRange.from);
