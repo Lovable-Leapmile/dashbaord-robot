@@ -33,6 +33,7 @@ interface CameraEvent {
   clip_url: string;
   last_updated?: string;
   updated_at?: string;
+  created_at?: string;
 }
 
 interface CameraTaskSummary {
