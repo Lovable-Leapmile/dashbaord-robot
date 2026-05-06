@@ -66,6 +66,7 @@ const Camera = () => {
     const saved = localStorage.getItem(FILTER_STORAGE_KEY);
     return (saved as SortOption) || "latest";
   });
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   useEffect(() => {
     fetchTasks();
