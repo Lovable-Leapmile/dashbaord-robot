@@ -81,6 +81,26 @@ const Camera = () => {
       validTasks = validTasks.filter((task) => task.task_id.toLowerCase().includes(searchQuery.toLowerCase()));
     }
 
+    // Apply date range filter (on last_updated)
+    if (dateRange?.from || dateRange?.to) {
+      validTasks = validTasks.filter((task) => {
+        if (!task.last_updated) return false;
+        const d = new Date(task.last_updated);
+        if (isNaN(d.getTime())) return false;
+        if (dateRange.from) {
+          const from = new Date(dateRange.from);
+          from.setHours(0, 0, 0, 0);
+          if (d < from) return false;
+        }
+        if (dateRange.to) {
+          const to = new Date(dateRange.to);
+          to.setHours(23, 59, 59, 999);
+          if (d > to) return false;
+        }
+        return true;
+      });
+    }
+
     // Apply sorting
     const sortedTasks = [...validTasks].sort((a, b) => {
       switch (sortOption) {
