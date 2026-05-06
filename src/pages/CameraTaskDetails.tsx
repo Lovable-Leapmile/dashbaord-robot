@@ -34,6 +34,11 @@ interface CameraEvent {
   last_updated?: string;
   updated_at?: string;
   created_at?: string;
+  metadata?: {
+    state?: string;
+    slot_id?: string;
+    tray_id?: string;
+  };
 }
 
 interface CameraTaskSummary {
@@ -281,6 +286,13 @@ const CameraTaskDetails = () => {
       field: "camera_device_id",
       flex: 1,
       minWidth: 150,
+    },
+    {
+      headerName: "Slot ID",
+      colId: "slot_id",
+      flex: 1,
+      minWidth: 130,
+      valueGetter: (params: ValueGetterParams<CameraEvent>) => params.data?.metadata?.slot_id || "N/A",
     },
     {
       headerName: "View",
