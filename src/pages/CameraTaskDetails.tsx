@@ -89,10 +89,16 @@ const CameraTaskDetails = () => {
   const parseEventDate = (value?: string): Date | null => {
     if (!value) return null;
     const raw = String(value).trim();
-    // Try direct parse first
+
+    const clipDateMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})[- T](\d{2}):(\d{2}):(\d{2})/);
+    if (clipDateMatch) {
+      const [, year, month, day, hour, minute, second] = clipDateMatch;
+      return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
+    }
+
     let d = new Date(raw);
     if (!isNaN(d.getTime())) return d;
-    // Fallback: normalize "YYYY-MM-DD HH:mm:ss" and short timezone offsets
+
     const normalized = raw.replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00");
     d = new Date(normalized);
     return isNaN(d.getTime()) ? null : d;
