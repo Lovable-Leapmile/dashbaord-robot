@@ -82,6 +82,31 @@ const CameraTaskDetails = () => {
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [taskLastUpdated, setTaskLastUpdated] = useState<string>();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+
+  const parseEventDate = (value?: string): Date | null => {
+    if (!value) return null;
+    const normalized = String(value).trim().replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00");
+    const d = new Date(normalized);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
+  const filteredEvents = events.filter((event) => {
+    if (!dateRange?.from && !dateRange?.to) return true;
+    const d = parseEventDate(event.clip_start_time);
+    if (!d) return false;
+    if (dateRange.from) {
+      const from = new Date(dateRange.from);
+      from.setHours(0, 0, 0, 0);
+      if (d < from) return false;
+    }
+    if (dateRange.to) {
+      const to = new Date(dateRange.to);
+      to.setHours(23, 59, 59, 999);
+      if (d > to) return false;
+    }
+    return true;
+  });
 
   useEffect(() => {
     if (taskId) {
