@@ -6,12 +6,16 @@ import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import type { ColDef, ICellRendererParams, ValueGetterParams } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz-no-font.css";
-import { Play, Download, ArrowLeft, RefreshCw, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { Play, Download, ArrowLeft, RefreshCw, ChevronLeft, ChevronRight, Image as ImageIcon, CalendarIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthSession } from "@/hooks/useAuthSession";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import type { DateRange } from "react-day-picker";
 import { getDefaultGridProps } from "@/lib/agGridUtils";
 import { format } from "date-fns";
 import { getApiUrl, authenticatedFetch } from "@/lib/api";
@@ -78,6 +82,31 @@ const CameraTaskDetails = () => {
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [taskLastUpdated, setTaskLastUpdated] = useState<string>();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+
+  const parseEventDate = (value?: string): Date | null => {
+    if (!value) return null;
+    const normalized = String(value).trim().replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00");
+    const d = new Date(normalized);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
+  const filteredEvents = events.filter((event) => {
+    if (!dateRange?.from && !dateRange?.to) return true;
+    const d = parseEventDate(event.clip_start_time);
+    if (!d) return false;
+    if (dateRange.from) {
+      const from = new Date(dateRange.from);
+      from.setHours(0, 0, 0, 0);
+      if (d < from) return false;
+    }
+    if (dateRange.to) {
+      const to = new Date(dateRange.to);
+      to.setHours(23, 59, 59, 999);
+      if (d > to) return false;
+    }
+    return true;
+  });
 
   useEffect(() => {
     if (taskId) {
@@ -166,13 +195,13 @@ const CameraTaskDetails = () => {
   };
 
   const handleDownloadCSV = () => {
-    if (events.length === 0) return;
+    if (filteredEvents.length === 0) return;
 
     const headers = ["Task ID", "Start Time", "Stop Time", "File Name", "Camera Name", "Clip URL"];
 
     const csvContent = [
       headers.join(","),
-      ...events.map((event) =>
+      ...filteredEvents.map((event) =>
         [
           event.task_id,
           event.clip_start_time,
@@ -300,12 +329,56 @@ const CameraTaskDetails = () => {
           </h1>
           <TooltipProvider>
             <div className="flex items-center gap-[15px]">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-9 justify-start text-left font-normal gap-2",
+                      !dateRange && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                    {dateRange?.from ? (
+                      dateRange.to ? (
+                        <span className="text-xs sm:text-sm">
+                          {format(dateRange.from, "d/M/yyyy")} - {format(dateRange.to, "d/M/yyyy")}
+                        </span>
+                      ) : (
+                        <span className="text-xs sm:text-sm">{format(dateRange.from, "d/M/yyyy")}</span>
+                      )
+                    ) : (
+                      <span className="text-xs sm:text-sm">Filter by date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+              {dateRange && (
+                <button
+                  onClick={() => setDateRange(undefined)}
+                  className="p-1 rounded-full hover:bg-accent transition-colors"
+                  title="Clear date filter"
+                >
+                  <X className="h-4 w-4 text-foreground" />
+                </button>
+              )}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleDownloadCSV}
                     className="p-2 rounded-full hover:bg-accent transition-colors"
-                    disabled={events.length === 0}
+                    disabled={filteredEvents.length === 0}
                   >
                     <Download className="h-5 w-5 text-foreground" />
                   </button>
@@ -338,7 +411,7 @@ const CameraTaskDetails = () => {
 
         {loading ? (
           <div className="text-center text-muted-foreground py-12">Loading camera events...</div>
-        ) : events.length === 0 ? (
+        ) : filteredEvents.length === 0 ? (
           <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
             <img src={noRecordsImage} alt="No records" className="w-48 sm:w-[340px]" />
           </div>
@@ -346,7 +419,7 @@ const CameraTaskDetails = () => {
           <div className="ag-theme-quartz w-full" style={{ height: "calc(100vh - 145px)" }}>
             <AgGridReact
               theme="legacy"
-              rowData={events}
+              rowData={filteredEvents}
               columnDefs={columnDefs}
               defaultColDef={{
                 sortable: true,
