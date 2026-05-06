@@ -295,6 +295,13 @@ const CameraTaskDetails = () => {
       valueGetter: (params: ValueGetterParams<CameraEvent>) => params.data?.metadata?.slot_id || "N/A",
     },
     {
+      headerName: "State",
+      colId: "state",
+      flex: 1,
+      minWidth: 120,
+      valueGetter: (params: ValueGetterParams<CameraEvent>) => params.data?.metadata?.state || "N/A",
+    },
+    {
       headerName: "View",
       width: 100,
       cellRenderer: (params: ICellRendererParams<CameraEvent>) => {
