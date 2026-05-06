@@ -329,12 +329,56 @@ const CameraTaskDetails = () => {
           </h1>
           <TooltipProvider>
             <div className="flex items-center gap-[15px]">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-9 justify-start text-left font-normal gap-2",
+                      !dateRange && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                    {dateRange?.from ? (
+                      dateRange.to ? (
+                        <span className="text-xs sm:text-sm">
+                          {format(dateRange.from, "d/M/yyyy")} - {format(dateRange.to, "d/M/yyyy")}
+                        </span>
+                      ) : (
+                        <span className="text-xs sm:text-sm">{format(dateRange.from, "d/M/yyyy")}</span>
+                      )
+                    ) : (
+                      <span className="text-xs sm:text-sm">Filter by date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+              {dateRange && (
+                <button
+                  onClick={() => setDateRange(undefined)}
+                  className="p-1 rounded-full hover:bg-accent transition-colors"
+                  title="Clear date filter"
+                >
+                  <X className="h-4 w-4 text-foreground" />
+                </button>
+              )}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleDownloadCSV}
                     className="p-2 rounded-full hover:bg-accent transition-colors"
-                    disabled={events.length === 0}
+                    disabled={filteredEvents.length === 0}
                   >
                     <Download className="h-5 w-5 text-foreground" />
                   </button>
@@ -367,7 +411,7 @@ const CameraTaskDetails = () => {
 
         {loading ? (
           <div className="text-center text-muted-foreground py-12">Loading camera events...</div>
-        ) : events.length === 0 ? (
+        ) : filteredEvents.length === 0 ? (
           <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
             <img src={noRecordsImage} alt="No records" className="w-48 sm:w-[340px]" />
           </div>
@@ -375,7 +419,7 @@ const CameraTaskDetails = () => {
           <div className="ag-theme-quartz w-full" style={{ height: "calc(100vh - 145px)" }}>
             <AgGridReact
               theme="legacy"
-              rowData={events}
+              rowData={filteredEvents}
               columnDefs={columnDefs}
               defaultColDef={{
                 sortable: true,
