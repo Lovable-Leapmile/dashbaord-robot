@@ -199,6 +199,7 @@ const Camera = () => {
                     selected={dateRange}
                     onSelect={setDateRange}
                     numberOfMonths={2}
+                    disabled={(date) => date > new Date()}
                     initialFocus
                     className={cn("p-3 pointer-events-auto")}
                   />
