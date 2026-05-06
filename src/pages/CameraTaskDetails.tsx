@@ -33,6 +33,7 @@ interface CameraEvent {
   clip_url: string;
   last_updated?: string;
   updated_at?: string;
+  created_at?: string;
 }
 
 interface CameraTaskSummary {
@@ -93,7 +94,7 @@ const CameraTaskDetails = () => {
 
   const filteredEvents = events.filter((event) => {
     if (!dateRange?.from && !dateRange?.to) return true;
-    const d = parseEventDate(event.clip_start_time);
+    const d = parseEventDate(event.created_at) || parseEventDate(event.clip_start_time);
     if (!d) return false;
     if (dateRange.from) {
       const from = new Date(dateRange.from);
