@@ -67,6 +67,7 @@ const Camera = () => {
     return (saved as SortOption) || "latest";
   });
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   useEffect(() => {
     fetchTasks();
