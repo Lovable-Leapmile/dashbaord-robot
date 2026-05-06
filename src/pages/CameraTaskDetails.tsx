@@ -88,8 +88,13 @@ const CameraTaskDetails = () => {
 
   const parseEventDate = (value?: string): Date | null => {
     if (!value) return null;
-    const normalized = String(value).trim().replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00");
-    const d = new Date(normalized);
+    const raw = String(value).trim();
+    // Try direct parse first
+    let d = new Date(raw);
+    if (!isNaN(d.getTime())) return d;
+    // Fallback: normalize "YYYY-MM-DD HH:mm:ss" and short timezone offsets
+    const normalized = raw.replace(" ", "T").replace(/([+-]\d{2})$/, "$1:00");
+    d = new Date(normalized);
     return isNaN(d.getTime()) ? null : d;
   };
 
@@ -366,6 +371,7 @@ const CameraTaskDetails = () => {
                       }
                     }}
                     numberOfMonths={2}
+                    disabled={(date) => date > new Date()}
                     initialFocus
                     className={cn("p-3 pointer-events-auto")}
                   />
