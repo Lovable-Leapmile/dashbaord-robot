@@ -195,13 +195,13 @@ const CameraTaskDetails = () => {
   };
 
   const handleDownloadCSV = () => {
-    if (events.length === 0) return;
+    if (filteredEvents.length === 0) return;
 
     const headers = ["Task ID", "Start Time", "Stop Time", "File Name", "Camera Name", "Clip URL"];
 
     const csvContent = [
       headers.join(","),
-      ...events.map((event) =>
+      ...filteredEvents.map((event) =>
         [
           event.task_id,
           event.clip_start_time,
