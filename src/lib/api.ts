@@ -1,5 +1,6 @@
-import { getStoredAuthToken } from "@/lib/auth";
+import { getStoredAuthToken, isTokenExpired } from "@/lib/auth";
 import { getApiBaseUrl, getApiName } from "@/lib/apiConfig";
+import { forceLogout, handleAuthResponse } from "@/lib/authLogout";
 
 // Dynamic API base URL - retrieved from environment or stored configuration
 export const getApiOrigin = (): string => getApiBaseUrl();
@@ -54,17 +55,25 @@ export const apiFetch = async (url: string, options: ApiFetchOptions = {}) => {
 
   if (requireAuth) {
     const token = getStoredAuthToken();
-    if (!token) throw new Error("AUTH_TOKEN_MISSING");
+    if (!token) {
+      forceLogout("Missing auth token");
+      throw new Error("AUTH_TOKEN_MISSING");
+    }
+    if (isTokenExpired()) {
+      forceLogout("Token expired (client check)");
+      throw new Error("AUTH_TOKEN_EXPIRED");
+    }
     h.set("Authorization", token);
   }
 
   // Resolve relative paths against the configured API origin
   const fullUrl = url.startsWith("http") ? url : getApiUrl(url);
 
-  return fetch(fullUrl, {
+  const res = await fetch(fullUrl, {
     ...rest,
     headers: h,
   });
+  return handleAuthResponse(res);
 };
 
 export const apiGet = async <T = any>(url: string, options: ApiFetchOptions = {}) => {
@@ -112,8 +121,14 @@ export const authenticatedFetch = async (url: string, options: RequestInit = {})
   // If url is just a path (starts with /), prepend the API origin
   const fullUrl = url.startsWith("http") ? url : getApiUrl(url);
 
-  return fetch(fullUrl, {
+  if (authToken && isTokenExpired()) {
+    forceLogout("Token expired (client check)");
+    throw new Error("AUTH_TOKEN_EXPIRED");
+  }
+
+  const res = await fetch(fullUrl, {
     ...options,
     headers,
   });
+  return handleAuthResponse(res);
 };
