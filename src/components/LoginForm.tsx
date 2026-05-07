@@ -287,8 +287,104 @@ const LoginForm = () => {
           >
             {isLoading ? "Logging in..." : "Login"}
           </Button>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={() => setShowChangePassword(true)}
+              className="text-sm text-primary hover:underline font-medium"
+            >
+              Change Password
+            </button>
+          </div>
         </form>
       </div>
+
+      {/* Change Password Dialog */}
+      <Dialog
+        open={showChangePassword}
+        onOpenChange={(open) => {
+          setShowChangePassword(open);
+          if (!open) resetChangePasswordForm();
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Change Password</DialogTitle>
+            <DialogDescription>
+              Enter your mobile number and old password to verify, then set a new password.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="cp-phone">Mobile Number</Label>
+              <Input
+                id="cp-phone"
+                type="tel"
+                value={cpPhone}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/\D/g, "");
+                  if (v.length <= 10) setCpPhone(v);
+                }}
+                placeholder="Enter mobile number"
+                maxLength={10}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-old">Old Password</Label>
+              <Input
+                id="cp-old"
+                type="password"
+                value={cpOldPassword}
+                onChange={(e) => setCpOldPassword(e.target.value)}
+                placeholder="Enter old password"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-new">New Password</Label>
+              <Input
+                id="cp-new"
+                type="password"
+                value={cpNewPassword}
+                onChange={(e) => setCpNewPassword(e.target.value)}
+                placeholder="Enter new password"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cp-confirm">Re-enter New Password</Label>
+              <Input
+                id="cp-confirm"
+                type="password"
+                value={cpConfirmPassword}
+                onChange={(e) => setCpConfirmPassword(e.target.value)}
+                placeholder="Re-enter new password"
+                required
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Password must contain uppercase, special characters, numbers &amp; minimum 6 digits
+              </p>
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setShowChangePassword(false);
+                  resetChangePasswordForm();
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={cpLoading}>
+                {cpLoading ? "Updating..." : "Update Password"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Footer */}
       <div className="mt-6 text-center text-xs text-gray-500 space-y-1">
