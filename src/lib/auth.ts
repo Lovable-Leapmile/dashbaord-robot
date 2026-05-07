@@ -26,3 +26,30 @@ export const storeAuthToken = (rawToken: unknown) => {
   const normalized = t.toLowerCase().startsWith("bearer ") ? t : `Bearer ${t}`;
   secureStorage.setItem(AUTH_TOKEN_STORAGE_KEY, normalized);
 };
+
+/**
+ * Decode JWT payload (no verification) and return its `exp` in ms.
+ * Returns null if token is not a JWT or has no exp.
+ */
+export const getTokenExpiryMs = (): number | null => {
+  const raw = getStoredAuthToken();
+  if (!raw) return null;
+  const token = raw.toLowerCase().startsWith("bearer ") ? raw.slice(7).trim() : raw;
+  const parts = token.split(".");
+  if (parts.length !== 3) return null;
+  try {
+    const payload = JSON.parse(
+      atob(parts[1].replace(/-/g, "+").replace(/_/g, "/"))
+    );
+    if (typeof payload.exp === "number") return payload.exp * 1000;
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+export const isTokenExpired = (): boolean => {
+  const exp = getTokenExpiryMs();
+  if (exp === null) return false; // unknown -> let session timestamp govern
+  return Date.now() >= exp;
+};
