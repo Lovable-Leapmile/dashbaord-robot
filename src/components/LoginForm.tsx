@@ -188,6 +188,9 @@ const LoginForm = () => {
                 )}
               </button>
             </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Password must contain uppercase, special characters &amp; numbers
+            </p>
           </div>
 
           {/* Login Button */}
