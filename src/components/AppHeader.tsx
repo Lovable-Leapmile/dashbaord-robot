@@ -59,7 +59,8 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
       document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`;
     });
     // Force full page reload to clear all React state, timers, and caches
-    window.location.replace("/");
+    const base = (import.meta.env.VITE_APP_BASE || "/").replace(/\/$/, "") || "/";
+    window.location.replace(base === "/" ? "/" : base + "/");
   };
 
   const handleLogoutClick = () => {
