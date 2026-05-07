@@ -1,7 +1,14 @@
+import { Navigate } from "react-router-dom";
 import LoginForm from "@/components/LoginForm";
 import backgroundImage from "@/assets/dashboard_login_bg.png";
+import { isSessionValid } from "@/hooks/useAuthSession";
+import { getStoredAuthToken } from "@/lib/auth";
 
 const Index = () => {
+  const hasToken = getStoredAuthToken() || sessionStorage.getItem("authToken");
+  if (hasToken && isSessionValid()) {
+    return <Navigate to="/home" replace />;
+  }
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image */}
