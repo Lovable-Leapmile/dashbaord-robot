@@ -2,6 +2,17 @@ import { secureStorage } from "./secureStorage";
 
 let loggingOut = false;
 
+export const shouldForceLogoutForAuthMessage = (message?: string): boolean => {
+  const normalized = (message || "").toLowerCase();
+  return (
+    normalized.includes("expired") ||
+    normalized.includes("token expired") ||
+    normalized.includes("signature has expired") ||
+    normalized.includes("invalid token") ||
+    normalized.includes("unable to decode token")
+  );
+};
+
 export const forceLogout = (reason?: string) => {
   if (loggingOut) return;
   loggingOut = true;
@@ -42,7 +53,9 @@ export const handleAuthResponse = async (res: Response): Promise<Response> => {
       const data = await cloned.json();
       msg = data?.message || "";
     } catch {}
-    forceLogout(msg || "401 Unauthorized");
+    if (shouldForceLogoutForAuthMessage(msg)) {
+      forceLogout(msg || "401 Unauthorized");
+    }
   }
   return res;
 };
