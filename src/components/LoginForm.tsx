@@ -85,9 +85,9 @@ const LoginForm = () => {
           password: cpOldPassword,
         }),
       });
-      const validateData = await validateRes.json().catch(() => ({}));
+      const validateData = await validateRes.json().catch(() => ({} as any));
 
-      if (!validateRes.ok || !validateData.user_id) {
+      if (!validateRes.ok || validateData.status === "failure") {
         toast({
           title: "Validation Failed",
           description: validateData.message || "Invalid mobile number or old password",
@@ -102,21 +102,24 @@ const LoginForm = () => {
         validateData.access_token ??
         validateData.auth_token ??
         validateData.authorization ??
-        validateData.Authorization;
+        validateData.Authorization ??
+        validateData.jwt ??
+        validateData.jwt_token;
 
       if (!rawToken) {
         toast({
           title: "Failed",
-          description: "Authentication token not received",
+          description: "Authentication token not received from validate API",
           variant: "destructive",
         });
         setCpLoading(false);
         return;
       }
 
-      const authHeader = String(rawToken).toLowerCase().startsWith("bearer ")
-        ? String(rawToken)
-        : `Bearer ${rawToken}`;
+      const tokenStr = String(rawToken).trim();
+      const authHeader = tokenStr.toLowerCase().startsWith("bearer ")
+        ? tokenStr
+        : `Bearer ${tokenStr}`;
 
       // Step 2: PATCH change_password with token
       const url = getApiUrl(`/user/user/change_password`);
