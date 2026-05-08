@@ -73,12 +73,59 @@ const LoginForm = () => {
 
     setCpLoading(true);
     try {
+      // Step 1: validate old password to obtain token
+      const validateRes = await fetch(getApiUrl(`/user/validate`), {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_phone: cpPhone,
+          password: cpOldPassword,
+        }),
+      });
+      const validateData = await validateRes.json().catch(() => ({}));
+
+      if (!validateRes.ok || !validateData.user_id) {
+        toast({
+          title: "Validation Failed",
+          description: validateData.message || "Invalid mobile number or old password",
+          variant: "destructive",
+        });
+        setCpLoading(false);
+        return;
+      }
+
+      const rawToken =
+        validateData.token ??
+        validateData.access_token ??
+        validateData.auth_token ??
+        validateData.authorization ??
+        validateData.Authorization;
+
+      if (!rawToken) {
+        toast({
+          title: "Failed",
+          description: "Authentication token not received",
+          variant: "destructive",
+        });
+        setCpLoading(false);
+        return;
+      }
+
+      const authHeader = String(rawToken).toLowerCase().startsWith("bearer ")
+        ? String(rawToken)
+        : `Bearer ${rawToken}`;
+
+      // Step 2: PATCH change_password with token
       const url = getApiUrl(`/user/user/change_password`);
       const res = await fetch(url, {
         method: "PATCH",
         headers: {
           "accept": "application/json",
           "Content-Type": "application/json",
+          "Authorization": authHeader,
         },
         body: JSON.stringify({
           user_phone: cpPhone,
