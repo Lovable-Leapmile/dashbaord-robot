@@ -25,6 +25,9 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showCpOld, setShowCpOld] = useState(false);
+  const [showCpNew, setShowCpNew] = useState(false);
+  const [showCpConfirm, setShowCpConfirm] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [cpPhone, setCpPhone] = useState("");
   const [cpOldPassword, setCpOldPassword] = useState("");
@@ -326,36 +329,69 @@ const LoginForm = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="cp-old">Old Password</Label>
-              <Input
-                id="cp-old"
-                type="password"
-                value={cpOldPassword}
-                onChange={(e) => setCpOldPassword(e.target.value)}
-                placeholder="Enter old password"
-                required
-              />
+              <div className="relative">
+                <Input
+                  id="cp-old"
+                  type={showCpOld ? "text" : "password"}
+                  value={cpOldPassword}
+                  onChange={(e) => setCpOldPassword(e.target.value)}
+                  placeholder="Enter old password"
+                  className="pr-10"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCpOld(!showCpOld)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  aria-label={showCpOld ? "Hide password" : "Show password"}
+                >
+                  {showCpOld ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="cp-new">New Password</Label>
-              <Input
-                id="cp-new"
-                type="password"
-                value={cpNewPassword}
-                onChange={(e) => setCpNewPassword(e.target.value)}
-                placeholder="Enter new password"
-                required
-              />
+              <div className="relative">
+                <Input
+                  id="cp-new"
+                  type={showCpNew ? "text" : "password"}
+                  value={cpNewPassword}
+                  onChange={(e) => setCpNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  className="pr-10"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCpNew(!showCpNew)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  aria-label={showCpNew ? "Hide password" : "Show password"}
+                >
+                  {showCpNew ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="cp-confirm">Re-enter New Password</Label>
-              <Input
-                id="cp-confirm"
-                type="password"
-                value={cpConfirmPassword}
-                onChange={(e) => setCpConfirmPassword(e.target.value)}
-                placeholder="Re-enter new password"
-                required
-              />
+              <div className="relative">
+                <Input
+                  id="cp-confirm"
+                  type={showCpConfirm ? "text" : "password"}
+                  value={cpConfirmPassword}
+                  onChange={(e) => setCpConfirmPassword(e.target.value)}
+                  placeholder="Re-enter new password"
+                  className="pr-10"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCpConfirm(!showCpConfirm)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  aria-label={showCpConfirm ? "Hide password" : "Show password"}
+                >
+                  {showCpConfirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
               <p className="text-xs text-gray-500 mt-1">
                 Password must contain uppercase, special characters, numbers &amp; minimum 6 digits
               </p>
