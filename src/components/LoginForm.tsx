@@ -54,53 +54,34 @@ const LoginForm = () => {
       return;
     }
 
-    // Validate old password by calling /user/validate
+    if (cpNewPassword !== cpConfirmPassword) {
+      toast({ title: "Password Mismatch", description: "New password and re-entered password do not match", variant: "destructive" });
+      return;
+    }
+
+    if (!passwordRegex.test(cpNewPassword)) {
+      toast({
+        title: "Weak Password",
+        description: "Password must contain uppercase, special characters, numbers and minimum 6 digits",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setCpLoading(true);
     try {
-      const validateRes = await fetch(getApiUrl(`/user/validate`), {
-        method: "POST",
-        headers: { "accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ user_phone: cpPhone, password: cpOldPassword }),
-      });
-      const validateData = await validateRes.json();
-      if (!validateRes.ok || !validateData.user_id) {
-        toast({ title: "Validation Failed", description: validateData.message || "Old password or phone is incorrect", variant: "destructive" });
-        setCpLoading(false);
-        return;
-      }
-
-      if (cpNewPassword !== cpConfirmPassword) {
-        toast({ title: "Password Mismatch", description: "New password and re-entered password do not match", variant: "destructive" });
-        setCpLoading(false);
-        return;
-      }
-
-      if (!passwordRegex.test(cpNewPassword)) {
-        toast({
-          title: "Weak Password",
-          description: "Password must contain uppercase, special characters, numbers and minimum 6 digits",
-          variant: "destructive",
-        });
-        setCpLoading(false);
-        return;
-      }
-
-      const tokenFromValidate = validateData.token;
-      const authHeader = tokenFromValidate
-        ? (String(tokenFromValidate).toLowerCase().startsWith("bearer ")
-            ? String(tokenFromValidate)
-            : `Bearer ${tokenFromValidate}`)
-        : "";
-
       const url = getApiUrl(`/user/user/change_password`);
       const res = await fetch(url, {
         method: "PATCH",
         headers: {
           "accept": "application/json",
           "Content-Type": "application/json",
-          ...(authHeader ? { Authorization: authHeader } : {}),
         },
-        body: JSON.stringify({ user_phone: cpPhone, password: cpNewPassword }),
+        body: JSON.stringify({
+          user_phone: cpPhone,
+          old_password: cpOldPassword,
+          new_password: cpNewPassword,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === "success" || data.status_code === 200)) {
