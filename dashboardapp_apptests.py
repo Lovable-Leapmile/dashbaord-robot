@@ -166,7 +166,7 @@ def run_all_tests():
         log_step("Browser State", "✅", "Browser opened")
 
         try:
-            if not test_login(page, "1234567890", "567890"):
+            if not test_login(page, "1234567899", "Mag@123"):
                 log_step("Login Action", "❌", "Login failed, aborting tests")
                 return
 
