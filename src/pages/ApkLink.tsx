@@ -27,10 +27,10 @@ const appVersions: AppVersion[] = [
     apkSize: "83 MB",
     downloadUrl: "https://ams-bucket.blr1.cdn.digitaloceanspaces.com/admin-app-v35.apk",
     releaseNotes: [
-"Initial release of Admin App",
-"Complete admin dashboard functionality",
-"User management features",
-"System configuration options"
+      "Initial release of Admin App",
+      "Complete admin dashboard functionality",
+      "User management features",
+      "System configuration options"
     ]
   },
   {
@@ -42,13 +42,13 @@ const appVersions: AppVersion[] = [
     webUrl: "https://amsstores1.leapmile.com:6500/",
     isLatest: true,
     releaseNotes: [
-"Easily track pending orders in one place.",
-"View available trays in the station instantly.",
-"Search by Item ID or Tray ID to call trays on demand.",
-"Quick request option for empty trays.",
-"Access complete transaction history anytime.",
-"Scan trays at the picking station for faster drop/pickup.",
-"New smooth flow: Select/scan tray → Choose Drop or Pickup → Confirm Item ID → Add Quantity → Submit."
+      "Easily track pending orders in one place.",
+      "View available trays in the station instantly.",
+      "Search by Item ID or Tray ID to call trays on demand.",
+      "Quick request option for empty trays.",
+      "Access complete transaction history anytime.",
+      "Scan trays at the picking station for faster drop/pickup.",
+      "New smooth flow: Select/scan tray → Choose Drop or Pickup → Confirm Item ID → Add Quantity → Submit."
     ]
   },
   {
@@ -59,10 +59,10 @@ const appVersions: AppVersion[] = [
     downloadUrl: "https://ams-bucket.blr1.cdn.digitaloceanspaces.com/Ams-Stores-v3-release.apk",
     webUrl: "https://amsstores1.leapmile.com:5700/",
     releaseNotes: [
-"Improved tray scanning accuracy",
-"Enhanced transaction history view",
-"Bug fixes and performance improvements",
-"Updated UI for better user experience"
+      "Improved tray scanning accuracy",
+      "Enhanced transaction history view",
+      "Bug fixes and performance improvements",
+      "Updated UI for better user experience"
     ]
   },
   {
@@ -72,10 +72,10 @@ const appVersions: AppVersion[] = [
     apkSize: "72 MB",
     downloadUrl: "https://ams-bucket.blr1.cdn.digitaloceanspaces.com/Ams-Stores-v2-release.apk",
     releaseNotes: [
-"Added tray management features",
-"Improved order tracking system",
-"Enhanced station visibility",
-"Performance optimizations"
+      "Added tray management features",
+      "Improved order tracking system",
+      "Enhanced station visibility",
+      "Performance optimizations"
     ]
   },
   {
@@ -85,10 +85,10 @@ const appVersions: AppVersion[] = [
     apkSize: "72 MB",
     downloadUrl: "https://ams-bucket.blr1.cdn.digitaloceanspaces.com/Ams-App-V1-release.apk",
     releaseNotes: [
-"Initial release of Store App",
-"Basic order management",
-"Tray scanning functionality",
-"Station integration"
+      "Initial release of Store App",
+      "Basic order management",
+      "Tray scanning functionality",
+      "Station integration"
     ]
   }
 ];
@@ -247,7 +247,7 @@ const ApkLink = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="APK Link" />
 
       <main className="px-3 sm:px-4 py-4 sm:py-5">

@@ -133,7 +133,7 @@ const Camera = () => {
       const response = await authenticatedFetch(getApiUrl(`/cameramanager/camera_events/tasks`), {
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
       const data = await response.json();
@@ -174,7 +174,7 @@ const Camera = () => {
                   <Button
                     variant="outline"
                     className={cn(
-"h-10 justify-start text-left font-normal gap-2",
+                      "h-10 justify-start text-left font-normal gap-2",
                       !dateRange && "text-muted-foreground",
                     )}
                   >
@@ -237,10 +237,11 @@ const Camera = () => {
               )}
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  className="h-10 w-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 shrink-0 bg-[#351C75]/15"
+                  className="h-10 w-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 shrink-0"
+                  style={{ backgroundColor: "rgba(53, 28, 117, 0.15)" }}
                   aria-label="Toggle filters"
                 >
-                  <SlidersHorizontal className="h-[18px] w-[18px] text-[#351c75]" />
+                  <SlidersHorizontal className="h-[18px] w-[18px]" style={{ color: "#351C75" }} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 bg-card border-border">
                   <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
@@ -267,7 +268,7 @@ const Camera = () => {
           {loading ? (
             <div className="text-center text-muted-foreground py-12">Loading tasks...</div>
           ) : filteredTasks.length === 0 ? (
-            <div className="flex items-center justify-center h-[100dvh]">
+            <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
               <img src={noRecordsImg} alt="No records" className="w-48 sm:w-[340px]" />
             </div>
           ) : (

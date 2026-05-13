@@ -191,17 +191,17 @@ const Completed = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="" isTasksPage={true} activeTaskTab="Completed" />
 
       <main className="p-2 sm:p-4">
         {loading ? (
-          <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)]">
+          <div className="flex flex-col items-center justify-center" style={{ minHeight: "calc(100vh - 180px)" }}>
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="mt-2 text-muted-foreground">Loading completed tasks...</p>
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)]">
+          <div className="flex flex-col items-center justify-center" style={{ minHeight: "calc(100vh - 180px)" }}>
             <p className="text-destructive">{error}</p>
             <button 
               onClick={fetchTasksData}
@@ -211,11 +211,11 @@ const Completed = () => {
             </button>
           </div>
         ) : rowData.length === 0 ? (
-          <div className="flex items-center justify-center h-[100dvh]">
+          <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
             <img src={noRecordsImage} alt="No Record found" className="w-48 sm:w-[340px]" />
           </div>
         ) : (
-          <div className="ag-theme-quartz w-full h-[calc(100vh-143px)]">
+          <div className="ag-theme-quartz w-full" style={{ height: "calc(100vh - 143px)" }}>
             <AgGridReact
               theme="legacy"
               rowData={rowData}

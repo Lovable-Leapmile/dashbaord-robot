@@ -23,9 +23,8 @@ export const storeAuthToken = (rawToken: unknown) => {
   const t = rawToken.trim();
   if (!t) return;
 
-  // Store raw token without "Bearer " prefix; the server rejects prefixed tokens.
-  const raw = t.toLowerCase().startsWith("bearer ") ? t.slice(7).trim() : t;
-  secureStorage.setItem(AUTH_TOKEN_STORAGE_KEY, raw);
+  const normalized = t.toLowerCase().startsWith("bearer ") ? t : `Bearer ${t}`;
+  secureStorage.setItem(AUTH_TOKEN_STORAGE_KEY, normalized);
 };
 
 /**

@@ -122,7 +122,7 @@ const Station = () => {
         method: "GET",
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -165,16 +165,16 @@ const Station = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="Station" />
 
       <main className="p-2 sm:p-4">
         {!loading && rowData.length === 0 ? (
-          <div className="flex items-center justify-center h-[100dvh]">
+          <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
             <img src={noRecordsImage} alt="No records found" className="w-48 sm:w-[340px]" />
           </div>
         ) : (
-          <div className="ag-theme-quartz w-full h-[calc(100vh-145px)]">
+          <div className="ag-theme-quartz w-full" style={{ height: "calc(100vh - 145px)" }}>
             <AgGridReact
               theme="legacy"
               rowData={rowData}

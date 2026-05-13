@@ -3,7 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { initTrustedTypes } from "./lib/trustedTypes";
 import { applyTheme } from "./lib/theme";
-import { forceLogout, shouldForceLogoutForAuthMessage } from "./lib/authLogout";
+import { forceLogout } from "./lib/authLogout";
 
 // Initialize Trusted Types policy before rendering to handle CSP requirements
 initTrustedTypes();
@@ -20,9 +20,7 @@ window.fetch = async (...args: Parameters<typeof fetch>) => {
       const cloned = res.clone();
       const data = await cloned.json().catch(() => null);
       const msg = data?.message || "401 Unauthorized";
-      if (shouldForceLogoutForAuthMessage(msg)) {
-        forceLogout(msg);
-      }
+      forceLogout(msg);
     } catch {
       forceLogout("401 Unauthorized");
     }

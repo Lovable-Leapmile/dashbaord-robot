@@ -50,7 +50,7 @@ const Logs = () => {
     return data.map((row) => {
       const message = row.message;
       return {
-"Created At": row.created_at ? format(new Date(row.created_at), "d/M/yyyy hh:mm:ss a") : "N/A",
+        "Created At": row.created_at ? format(new Date(row.created_at), "d/M/yyyy hh:mm:ss a") : "N/A",
         Message:
           typeof message === "object" && message?.msg
             ? message.msg.split("\\n")[0]
@@ -60,8 +60,8 @@ const Logs = () => {
         Action:
           typeof message === "object" && message?.action ? message.action : "N/A",
         Status: typeof message === "object" && message?.status ? message.status : "N/A",
-"Tray ID": typeof message === "object" && message?.metadata?.tray_id ? message.metadata.tray_id : "N/A",
-"Slot ID": typeof message === "object" && message?.metadata?.slot_id ? message.metadata.slot_id : "N/A",
+        "Tray ID": typeof message === "object" && message?.metadata?.tray_id ? message.metadata.tray_id : "N/A",
+        "Slot ID": typeof message === "object" && message?.metadata?.slot_id ? message.metadata.slot_id : "N/A",
         State: typeof message === "object" && message?.metadata?.state ? message.metadata.state : "N/A",
       };
     });
@@ -369,11 +369,11 @@ const Logs = () => {
         </div> */}
 
         {!loading && rowData.length === 0 ? (
-          <div className="flex items-center justify-center h-[100dvh]">
+          <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
             <img src={noRecordsImage} alt="No Record found" className="w-48 sm:w-[340px]" />
           </div>
         ) : (
-          <div className="ag-theme-quartz w-full overflow-visible h-[calc(100vh-90px)]">
+          <div className="ag-theme-quartz w-full overflow-visible" style={{ height: "calc(100vh - 90px)" }}>
             <AgGridReact
               theme="legacy"
               rowData={rowData}

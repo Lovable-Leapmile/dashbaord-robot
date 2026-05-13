@@ -86,7 +86,7 @@ const Racks = () => {
         method: "GET",
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -115,7 +115,7 @@ const Racks = () => {
         method: "GET",
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -224,7 +224,7 @@ const Racks = () => {
       const response = await authenticatedFetch(getApiUrl(`/robotmanager/slots?slot_id=${slotId}`), {
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -278,11 +278,11 @@ const Racks = () => {
             <img src={blockImg} alt="Inactive" className="w-full h-full object-cover rounded" />
           </div>
         )}
-        <div className="text-xs font-medium relative z-10 text-[#351c75]">
+        <div className="text-xs font-medium relative z-10" style={{ color: "#351c75" }}>
           {slot.slot_id}
         </div>
         {(!isInactive || slot.tray_id) && (
-          <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-1 gap-px">
+          <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-1" style={{ gap: "1px" }}>
             {slot.tray_id && <img src={trayImg} alt="Tray" className="w-[116px] h-[8px] sm:w-[146px] sm:h-[10px]" />}
             {!isInactive && isStation && (
               <TooltipProvider>
@@ -319,7 +319,7 @@ const Racks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="Racks" />
 
       <main className="p-2 sm:p-4">
@@ -351,7 +351,7 @@ const Racks = () => {
               <div className="flex flex-col lg:flex-row gap-0">
                 {/* Row 1 Section */}
                 <div className="flex flex-col items-center p-4 border-r border-gray-100">
-                  <div className="text-sm font-bold mb-4 text-[#351c75]">
+                  <div className="text-sm font-bold mb-4" style={{ color: "#351c75" }}>
                     Row 1
                   </div>
                   <div className="flex gap-3">
@@ -397,7 +397,7 @@ const Racks = () => {
 
                 {/* Row 0 Section */}
                 <div className="flex flex-col items-center p-4">
-                  <div className="text-sm font-bold mb-4 text-[#351c75]">
+                  <div className="text-sm font-bold mb-4" style={{ color: "#351c75" }}>
                     Row 0
                   </div>
                   <div className="flex gap-3">

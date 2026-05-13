@@ -196,7 +196,8 @@ const ApiConfigModal = ({ onConfigured, open, onOpenChange, prefillApiName }: Ap
             <Button
               type="submit"
               disabled={!isValid || isSubmitting}
-              className={`${isControlled ? 'flex-1' : 'w-full'} rounded-xl py-5 font-semibold text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary text-primary-foreground hover:bg-primary/90`}
+              className={`${isControlled ? 'flex-1' : 'w-full'} rounded-xl py-5 font-semibold text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              style={{ backgroundColor: '#351C75' }}
             >
               {isSubmitting ? "Configuring..." : isControlled ? "Update" : "Continue"}
             </Button>

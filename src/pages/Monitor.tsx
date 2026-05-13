@@ -10,20 +10,20 @@ import noRecordsImg from "@/assets/no_records.png";
 interface StatusMessage {
   msg?: string;
   UPTIME?: string;
-"GOTO OPS"?: string;
+  "GOTO OPS"?: string;
   ROBOT_ID?: string;
-"PLC READS"?: string;
-"STORE OPS"?: string;
+  "PLC READS"?: string;
+  "STORE OPS"?: string;
   device_id?: string;
-"PLC ERRORS"?: string;
-"PLC WRITES"?: string;
-"NUM HOMINGS"?: string;
-"RETRIEVE OPS"?: string;
-"RECOVERIES MAGNET"?: string;
-"SUPERVISOR STATUS"?: string;
-"RECOVERIES HORZVERT"?: string;
-"RECOVERIES PUSHPULL"?: string;
-"SUPERVISOR START TIME"?: string;
+  "PLC ERRORS"?: string;
+  "PLC WRITES"?: string;
+  "NUM HOMINGS"?: string;
+  "RETRIEVE OPS"?: string;
+  "RECOVERIES MAGNET"?: string;
+  "SUPERVISOR STATUS"?: string;
+  "RECOVERIES HORZVERT"?: string;
+  "RECOVERIES PUSHPULL"?: string;
+  "SUPERVISOR START TIME"?: string;
   [key: string]: string | undefined;
 }
 
@@ -165,26 +165,26 @@ const Monitor = () => {
     if (!statusData) return null;
 
     const PREFERRED_ORDER = [
-"ROBOT_ID",
-"SUPERVISOR START TIME",
-"UPDATED_AT",
-"UPTIME",
-"GOTO OPS",
-"STORE OPS",
-"RETRIEVE OPS",
-"NUM HOMINGS",
-"PLC READS",
-"PLC WRITES",
-"PLC READ RETRIES",
-"PLC WRITE RETRIES",
-"PLC TOTAL RETRIES",
-"PLC RETRIES",
-"PLC ERRORS",
-"RECOVERIES MAGNET",
-"RECOVERIES HORZVERT",
-"RECOVERIES PUSHPULL",
-"msg",
-"SUPERVISOR STATUS",
+      "ROBOT_ID",
+      "SUPERVISOR START TIME",
+      "UPDATED_AT",
+      "UPTIME",
+      "GOTO OPS",
+      "STORE OPS",
+      "RETRIEVE OPS",
+      "NUM HOMINGS",
+      "PLC READS",
+      "PLC WRITES",
+      "PLC READ RETRIES",
+      "PLC WRITE RETRIES",
+      "PLC TOTAL RETRIES",
+      "PLC RETRIES",
+      "PLC ERRORS",
+      "RECOVERIES MAGNET",
+      "RECOVERIES HORZVERT",
+      "RECOVERIES PUSHPULL",
+      "msg",
+      "SUPERVISOR STATUS",
     ];
 
     const availableKeys = Object.keys(statusData).filter(
@@ -230,7 +230,7 @@ const Monitor = () => {
 
           {/* Empty state */}
           {!isLoading && !error && !statusData && (
-            <div className="flex items-center justify-center h-[100dvh]">
+            <div className="flex items-center justify-center" style={{ height: "100dvh" }}>
               <img src={noRecordsImg} alt="No records" className="w-48 sm:w-[340px]" />
             </div>
           )}

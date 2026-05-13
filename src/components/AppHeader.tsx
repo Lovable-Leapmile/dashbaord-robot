@@ -74,14 +74,14 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
 
   const handleTabClick = (tab: string) => {
     const routes: { [key: string]: string } = {
-"Robot": "/home",
-"Racks": "/racks",
-"Trays": "/trays",
-"Slots": "/slots",
-"Station": "/station",
-"Extremes": "/extremes",
-"APK Link": "/apk-link",
-"Admin Console": "/admin-console"
+      "Robot": "/home",
+      "Racks": "/racks",
+      "Trays": "/trays",
+      "Slots": "/slots",
+      "Station": "/station",
+      "Extremes": "/extremes",
+      "APK Link": "/apk-link",
+      "Admin Console": "/admin-console"
     };
     if (routes[tab]) {
       navigate(routes[tab]);
@@ -145,14 +145,16 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
   return (
     <div className="sticky top-0 z-50">
       <header 
-        className="flex items-center justify-between px-2 sm:px-4 bg-primary h-[55px]"
+        className="flex items-center justify-between px-2 sm:px-4 bg-primary"
+        style={{ height: '55px' }}
       >
         <div className="flex items-center gap-2 sm:gap-[10px]">
           {/* Mobile Hamburger Menu */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <button 
-                className="md:hidden rounded-lg flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity w-9 h-9 bg-white/15"
+                className="md:hidden rounded-lg flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity w-9 h-9"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
                 aria-label="Open menu"
               >
                 <Menu className="text-white w-5 h-5" />
@@ -166,7 +168,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
                 </div>
               </SheetHeader>
               
-              <div className="py-2 overflow-y-auto mobile-sheet-scroll">
+              <div className="py-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 65px)' }}>
                 {/* Main Navigation */}
                 <div className="px-3 py-2">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Navigation</p>
@@ -276,9 +278,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             {mainNavItems.map((item) => (
               <span 
                 key={item.path}
-                className={`text-base cursor-pointer hover:opacity-100 whitespace-nowrap relative group ${
-                  item.active ? "text-primary-foreground font-semibold" : "text-primary-foreground/50 font-normal"
-                }`}
+                className="text-base cursor-pointer hover:opacity-100 whitespace-nowrap relative group"
+                style={{ 
+                  color: item.active ? 'white' : 'rgba(255, 255, 255, 0.5)',
+                  fontWeight: item.active ? 600 : 400
+                }}
                 onClick={() => navigate(item.path)}
               >
                 {item.label}
@@ -298,7 +302,8 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div 
-                    className="rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-8 h-8 sm:w-10 sm:h-10 bg-white/20"
+                    className="rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-8 h-8 sm:w-10 sm:h-10"
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}
                     onClick={handleScreenshot}
                   >
                     <Camera className="text-white w-4 h-4 sm:w-[18px] sm:h-[18px]" />
@@ -313,9 +318,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
-                    isLogsPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
-                  }`}
+                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
+                  style={{ 
+                    backgroundColor: isLogsPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
+                    boxShadow: isLogsPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
+                  }}
                   onClick={() => navigate("/logs")}
                 >
                   <ScrollText className="text-white w-[18px] h-[18px]" />
@@ -329,9 +336,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
-                    isMonitorPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
-                  }`}
+                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
+                  style={{ 
+                    backgroundColor: isMonitorPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
+                    boxShadow: isMonitorPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
+                  }}
                   onClick={() => navigate("/monitor")}
                 >
                   <Activity className="text-white w-[18px] h-[18px]" />
@@ -345,9 +354,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
-                    isMapPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
-                  }`}
+                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
+                  style={{ 
+                    backgroundColor: isMapPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
+                    boxShadow: isMapPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
+                  }}
                   onClick={() => navigate("/map")}
                 >
                   <MapPin className="text-white w-[18px] h-[18px]" />
@@ -361,7 +372,8 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 bg-white/20"
+                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}
                   onClick={handleLogoutClick}
                 >
                   <LogOut className="text-white w-[18px] h-[18px]" />
@@ -377,11 +389,15 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
 
       {/* Desktop Sub-navigation for Configuration */}
       {selectedTab && !isTasksPage && !isCameraPage && !isReportsPage && !isLogsPage && (
-        <nav className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto subnav-bar">
+        <nav 
+          className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto"
+          style={{ backgroundColor: '#eeeeee', height: '55px' }}
+        >
           {configTabs.map((item) => (
             <span 
               key={item.tab}
-              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap subnav-link" 
+              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap" 
+              style={{ color: '#555' }}
               onClick={() => handleTabClick(item.tab)}
             >
               {item.label}
@@ -393,11 +409,15 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
 
       {/* Desktop Sub-navigation for Tasks */}
       {isTasksPage && (
-        <nav className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto subnav-bar">
+        <nav 
+          className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto"
+          style={{ backgroundColor: '#eeeeee', height: '55px' }}
+        >
           {taskTabs.map((item) => (
             <span
               key={item.path}
-              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap subnav-link"
+              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap"
+              style={{ color: '#555' }}
               onClick={() => navigate(item.path)}
             >
               {item.label}

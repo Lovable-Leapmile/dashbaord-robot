@@ -136,7 +136,7 @@ const Slots = () => {
         method: "GET",
         headers: {
           Authorization: token,
-"Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -185,7 +185,7 @@ const Slots = () => {
           method: "GET",
           headers: {
             Authorization: token,
-"Content-Type": "application/json",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -252,7 +252,7 @@ const Slots = () => {
           method: "GET",
           headers: {
             Authorization: token,
-"Content-Type": "application/json",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -300,7 +300,7 @@ const Slots = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen" style={{ backgroundColor: "#fafafa" }}>
       <AppHeader selectedTab="Slots" />
 
       <main className="p-2 sm:p-4">
@@ -348,11 +348,11 @@ const Slots = () => {
         </div>
 
         {!loading && rowData.length === 0 ? (
-          <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+          <div className="flex items-center justify-center" style={{ height: "calc(100vh - 200px)" }}>
             <img src={noRecordsImage} alt="No records found" className="w-48 sm:w-[340px]" />
           </div>
         ) : (
-          <div className="ag-theme-quartz w-full h-[calc(100vh-180px)]">
+          <div className="ag-theme-quartz w-full" style={{ height: "calc(100vh - 180px)" }}>
             <AgGridReact
               theme="legacy"
               rowData={rowData}

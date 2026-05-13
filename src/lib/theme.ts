@@ -262,7 +262,44 @@ export function getCurrentTheme(): ThemeColors {
 
 // Apply theme to document root
 export function applyTheme(skin?: UISkin): void {
+  const theme = skin ? THEMES[skin] : getCurrentTheme();
   const root = document.documentElement;
+  
+  // Set all CSS variables
+  root.style.setProperty('--primary', theme.primary);
+  root.style.setProperty('--primary-foreground', theme.primaryForeground);
+  root.style.setProperty('--secondary', theme.secondary);
+  root.style.setProperty('--secondary-foreground', theme.secondaryForeground);
+  root.style.setProperty('--accent', theme.accent);
+  root.style.setProperty('--accent-foreground', theme.accentForeground);
+  root.style.setProperty('--background', theme.background);
+  root.style.setProperty('--foreground', theme.foreground);
+  root.style.setProperty('--card', theme.card);
+  root.style.setProperty('--card-foreground', theme.cardForeground);
+  root.style.setProperty('--popover', theme.popover);
+  root.style.setProperty('--popover-foreground', theme.popoverForeground);
+  root.style.setProperty('--muted', theme.muted);
+  root.style.setProperty('--muted-foreground', theme.mutedForeground);
+  root.style.setProperty('--border', theme.border);
+  root.style.setProperty('--input', theme.input);
+  root.style.setProperty('--ring', theme.ring);
+  root.style.setProperty('--destructive', theme.destructive);
+  root.style.setProperty('--destructive-foreground', theme.destructiveForeground);
+  root.style.setProperty('--success', theme.success);
+  root.style.setProperty('--warning', theme.warning);
+  root.style.setProperty('--login-overlay', theme.loginOverlay);
+  root.style.setProperty('--login-title', theme.loginTitle);
+  root.style.setProperty('--sidebar-background', theme.sidebarBackground);
+  root.style.setProperty('--sidebar-foreground', theme.sidebarForeground);
+  root.style.setProperty('--sidebar-primary', theme.sidebarPrimary);
+  root.style.setProperty('--sidebar-primary-foreground', theme.sidebarPrimaryForeground);
+  root.style.setProperty('--sidebar-accent', theme.sidebarAccent);
+  root.style.setProperty('--sidebar-accent-foreground', theme.sidebarAccentForeground);
+  root.style.setProperty('--sidebar-border', theme.sidebarBorder);
+  root.style.setProperty('--sidebar-ring', theme.sidebarRing);
+  root.style.setProperty('--ag-grid-header', theme.agGridHeader);
+  
+  // Set data attribute for potential CSS selectors
   root.setAttribute('data-theme', skin || getCurrentSkin());
 }
 
