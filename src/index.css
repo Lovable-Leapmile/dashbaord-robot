@@ -509,3 +509,208 @@ All colors MUST be HSL.
 .subnav-link {
   color: hsl(0 0% 33%);
 }
+
+
+/* Generated shuttle layout classes for CSP-safe dynamic positioning */
+.track-height-0 { height: 0px; }
+.shuttle-rack-0 { transform: translate(-50%, 0px); }
+.track-height-1 { height: 25px; }
+.shuttle-rack-1 { transform: translate(-50%, 35px); }
+.track-height-2 { height: 60px; }
+.shuttle-rack-2 { transform: translate(-50%, 70px); }
+.track-height-3 { height: 95px; }
+.shuttle-rack-3 { transform: translate(-50%, 105px); }
+.track-height-4 { height: 130px; }
+.shuttle-rack-4 { transform: translate(-50%, 140px); }
+.track-height-5 { height: 165px; }
+.shuttle-rack-5 { transform: translate(-50%, 175px); }
+.track-height-6 { height: 200px; }
+.shuttle-rack-6 { transform: translate(-50%, 210px); }
+.track-height-7 { height: 235px; }
+.shuttle-rack-7 { transform: translate(-50%, 245px); }
+.track-height-8 { height: 270px; }
+.shuttle-rack-8 { transform: translate(-50%, 280px); }
+.track-height-9 { height: 305px; }
+.shuttle-rack-9 { transform: translate(-50%, 315px); }
+.track-height-10 { height: 340px; }
+.shuttle-rack-10 { transform: translate(-50%, 350px); }
+.track-height-11 { height: 375px; }
+.shuttle-rack-11 { transform: translate(-50%, 385px); }
+.track-height-12 { height: 410px; }
+.shuttle-rack-12 { transform: translate(-50%, 420px); }
+.track-height-13 { height: 445px; }
+.shuttle-rack-13 { transform: translate(-50%, 455px); }
+.track-height-14 { height: 480px; }
+.shuttle-rack-14 { transform: translate(-50%, 490px); }
+.track-height-15 { height: 515px; }
+.shuttle-rack-15 { transform: translate(-50%, 525px); }
+.track-height-16 { height: 550px; }
+.shuttle-rack-16 { transform: translate(-50%, 560px); }
+.track-height-17 { height: 585px; }
+.shuttle-rack-17 { transform: translate(-50%, 595px); }
+.track-height-18 { height: 620px; }
+.shuttle-rack-18 { transform: translate(-50%, 630px); }
+.track-height-19 { height: 655px; }
+.shuttle-rack-19 { transform: translate(-50%, 665px); }
+.track-height-20 { height: 690px; }
+.shuttle-rack-20 { transform: translate(-50%, 700px); }
+.track-height-21 { height: 725px; }
+.shuttle-rack-21 { transform: translate(-50%, 735px); }
+.track-height-22 { height: 760px; }
+.shuttle-rack-22 { transform: translate(-50%, 770px); }
+.track-height-23 { height: 795px; }
+.shuttle-rack-23 { transform: translate(-50%, 805px); }
+.track-height-24 { height: 830px; }
+.shuttle-rack-24 { transform: translate(-50%, 840px); }
+.track-height-25 { height: 865px; }
+.shuttle-rack-25 { transform: translate(-50%, 875px); }
+.track-height-26 { height: 900px; }
+.shuttle-rack-26 { transform: translate(-50%, 910px); }
+.track-height-27 { height: 935px; }
+.shuttle-rack-27 { transform: translate(-50%, 945px); }
+.track-height-28 { height: 970px; }
+.shuttle-rack-28 { transform: translate(-50%, 980px); }
+.track-height-29 { height: 1005px; }
+.shuttle-rack-29 { transform: translate(-50%, 1015px); }
+.track-height-30 { height: 1040px; }
+.shuttle-rack-30 { transform: translate(-50%, 1050px); }
+.track-height-31 { height: 1075px; }
+.shuttle-rack-31 { transform: translate(-50%, 1085px); }
+.track-height-32 { height: 1110px; }
+.shuttle-rack-32 { transform: translate(-50%, 1120px); }
+.track-height-33 { height: 1145px; }
+.shuttle-rack-33 { transform: translate(-50%, 1155px); }
+.track-height-34 { height: 1180px; }
+.shuttle-rack-34 { transform: translate(-50%, 1190px); }
+.track-height-35 { height: 1215px; }
+.shuttle-rack-35 { transform: translate(-50%, 1225px); }
+.track-height-36 { height: 1250px; }
+.shuttle-rack-36 { transform: translate(-50%, 1260px); }
+.track-height-37 { height: 1285px; }
+.shuttle-rack-37 { transform: translate(-50%, 1295px); }
+.track-height-38 { height: 1320px; }
+.shuttle-rack-38 { transform: translate(-50%, 1330px); }
+.track-height-39 { height: 1355px; }
+.shuttle-rack-39 { transform: translate(-50%, 1365px); }
+.track-height-40 { height: 1390px; }
+.shuttle-rack-40 { transform: translate(-50%, 1400px); }
+.track-height-41 { height: 1425px; }
+.shuttle-rack-41 { transform: translate(-50%, 1435px); }
+.track-height-42 { height: 1460px; }
+.shuttle-rack-42 { transform: translate(-50%, 1470px); }
+.track-height-43 { height: 1495px; }
+.shuttle-rack-43 { transform: translate(-50%, 1505px); }
+.track-height-44 { height: 1530px; }
+.shuttle-rack-44 { transform: translate(-50%, 1540px); }
+.track-height-45 { height: 1565px; }
+.shuttle-rack-45 { transform: translate(-50%, 1575px); }
+.track-height-46 { height: 1600px; }
+.shuttle-rack-46 { transform: translate(-50%, 1610px); }
+.track-height-47 { height: 1635px; }
+.shuttle-rack-47 { transform: translate(-50%, 1645px); }
+.track-height-48 { height: 1670px; }
+.shuttle-rack-48 { transform: translate(-50%, 1680px); }
+.track-height-49 { height: 1705px; }
+.shuttle-rack-49 { transform: translate(-50%, 1715px); }
+.track-height-50 { height: 1740px; }
+.shuttle-rack-50 { transform: translate(-50%, 1750px); }
+.track-height-51 { height: 1775px; }
+.shuttle-rack-51 { transform: translate(-50%, 1785px); }
+.track-height-52 { height: 1810px; }
+.shuttle-rack-52 { transform: translate(-50%, 1820px); }
+.track-height-53 { height: 1845px; }
+.shuttle-rack-53 { transform: translate(-50%, 1855px); }
+.track-height-54 { height: 1880px; }
+.shuttle-rack-54 { transform: translate(-50%, 1890px); }
+.track-height-55 { height: 1915px; }
+.shuttle-rack-55 { transform: translate(-50%, 1925px); }
+.track-height-56 { height: 1950px; }
+.shuttle-rack-56 { transform: translate(-50%, 1960px); }
+.track-height-57 { height: 1985px; }
+.shuttle-rack-57 { transform: translate(-50%, 1995px); }
+.track-height-58 { height: 2020px; }
+.shuttle-rack-58 { transform: translate(-50%, 2030px); }
+.track-height-59 { height: 2055px; }
+.shuttle-rack-59 { transform: translate(-50%, 2065px); }
+.track-height-60 { height: 2090px; }
+.shuttle-rack-60 { transform: translate(-50%, 2100px); }
+.track-height-61 { height: 2125px; }
+.shuttle-rack-61 { transform: translate(-50%, 2135px); }
+.track-height-62 { height: 2160px; }
+.shuttle-rack-62 { transform: translate(-50%, 2170px); }
+.track-height-63 { height: 2195px; }
+.shuttle-rack-63 { transform: translate(-50%, 2205px); }
+.track-height-64 { height: 2230px; }
+.shuttle-rack-64 { transform: translate(-50%, 2240px); }
+.track-height-65 { height: 2265px; }
+.shuttle-rack-65 { transform: translate(-50%, 2275px); }
+.track-height-66 { height: 2300px; }
+.shuttle-rack-66 { transform: translate(-50%, 2310px); }
+.track-height-67 { height: 2335px; }
+.shuttle-rack-67 { transform: translate(-50%, 2345px); }
+.track-height-68 { height: 2370px; }
+.shuttle-rack-68 { transform: translate(-50%, 2380px); }
+.track-height-69 { height: 2405px; }
+.shuttle-rack-69 { transform: translate(-50%, 2415px); }
+.track-height-70 { height: 2440px; }
+.shuttle-rack-70 { transform: translate(-50%, 2450px); }
+.track-height-71 { height: 2475px; }
+.shuttle-rack-71 { transform: translate(-50%, 2485px); }
+.track-height-72 { height: 2510px; }
+.shuttle-rack-72 { transform: translate(-50%, 2520px); }
+.track-height-73 { height: 2545px; }
+.shuttle-rack-73 { transform: translate(-50%, 2555px); }
+.track-height-74 { height: 2580px; }
+.shuttle-rack-74 { transform: translate(-50%, 2590px); }
+.track-height-75 { height: 2615px; }
+.shuttle-rack-75 { transform: translate(-50%, 2625px); }
+.track-height-76 { height: 2650px; }
+.shuttle-rack-76 { transform: translate(-50%, 2660px); }
+.track-height-77 { height: 2685px; }
+.shuttle-rack-77 { transform: translate(-50%, 2695px); }
+.track-height-78 { height: 2720px; }
+.shuttle-rack-78 { transform: translate(-50%, 2730px); }
+.track-height-79 { height: 2755px; }
+.shuttle-rack-79 { transform: translate(-50%, 2765px); }
+.track-height-80 { height: 2790px; }
+.shuttle-rack-80 { transform: translate(-50%, 2800px); }
+.track-height-81 { height: 2825px; }
+.shuttle-rack-81 { transform: translate(-50%, 2835px); }
+.track-height-82 { height: 2860px; }
+.shuttle-rack-82 { transform: translate(-50%, 2870px); }
+.track-height-83 { height: 2895px; }
+.shuttle-rack-83 { transform: translate(-50%, 2905px); }
+.track-height-84 { height: 2930px; }
+.shuttle-rack-84 { transform: translate(-50%, 2940px); }
+.track-height-85 { height: 2965px; }
+.shuttle-rack-85 { transform: translate(-50%, 2975px); }
+.track-height-86 { height: 3000px; }
+.shuttle-rack-86 { transform: translate(-50%, 3010px); }
+.track-height-87 { height: 3035px; }
+.shuttle-rack-87 { transform: translate(-50%, 3045px); }
+.track-height-88 { height: 3070px; }
+.shuttle-rack-88 { transform: translate(-50%, 3080px); }
+.track-height-89 { height: 3105px; }
+.shuttle-rack-89 { transform: translate(-50%, 3115px); }
+.track-height-90 { height: 3140px; }
+.shuttle-rack-90 { transform: translate(-50%, 3150px); }
+.track-height-91 { height: 3175px; }
+.shuttle-rack-91 { transform: translate(-50%, 3185px); }
+.track-height-92 { height: 3210px; }
+.shuttle-rack-92 { transform: translate(-50%, 3220px); }
+.track-height-93 { height: 3245px; }
+.shuttle-rack-93 { transform: translate(-50%, 3255px); }
+.track-height-94 { height: 3280px; }
+.shuttle-rack-94 { transform: translate(-50%, 3290px); }
+.track-height-95 { height: 3315px; }
+.shuttle-rack-95 { transform: translate(-50%, 3325px); }
+.track-height-96 { height: 3350px; }
+.shuttle-rack-96 { transform: translate(-50%, 3360px); }
+.track-height-97 { height: 3385px; }
+.shuttle-rack-97 { transform: translate(-50%, 3395px); }
+.track-height-98 { height: 3420px; }
+.shuttle-rack-98 { transform: translate(-50%, 3430px); }
+.track-height-99 { height: 3455px; }
+.shuttle-rack-99 { transform: translate(-50%, 3465px); }
+.track-height-100 { height: 3490px; }
+.shuttle-rack-100 { transform: translate(-50%, 3500px); }
