@@ -210,18 +210,17 @@ const Home = () => {
     shuttleState.shuttle_move_rack,
   ]);
 
-  // Get status color based on action
-  const getStatusColor = (action: string | null) => {
+  const getStatusClass = (action: string | null) => {
     if (!action || action === "Ongoing") {
-      return { bg: "transparent", border: "#166534" }; // dark green border for idle
+      return "status-idle";
     }
     if (action === "Stored" || action === "Retrieved") {
-      return { bg: "#22c55e", border: "#22c55e" }; // green for completed
+      return "status-complete";
     }
     if (action === "Storing" || action === "Retrieve") {
-      return { bg: "transparent", border: "#86efac" }; // light green border for in-progress
+      return "status-progress";
     }
-    return { bg: "transparent", border: "#166534" };
+    return "status-idle";
   };
 
   useEffect(() => {
@@ -314,25 +313,8 @@ const Home = () => {
     return store_row === rowIndex && store_rack === rackIndex && store_depth === depthIndex;
   };
 
-  // Get slot highlight styles based on shuttle action
-  const getSlotHighlightStyles = (rowIndex: number, rackIndex: number, depthIndex: number) => {
-    if (!isSlotHighlighted(rowIndex, rackIndex, depthIndex)) {
-      return {
-        backgroundColor: "#ffffff",
-        border: "1px solid #d1d5db",
-        boxShadow: "none",
-      };
-    }
-
-    const { shuttle_action } = shuttleState;
-    const statusColor = getStatusColor(shuttle_action);
-    
-    return {
-      backgroundColor: statusColor.bg === "transparent" ? "#dcfce7" : "#bbf7d0", // light green bg
-      border: `2px solid ${statusColor.border}`,
-      boxShadow: `0 0 8px rgba(34, 197, 94, 0.4)`,
-    };
-  };
+  const getSlotHighlightClass = (rowIndex: number, rackIndex: number, depthIndex: number) =>
+    isSlotHighlighted(rowIndex, rackIndex, depthIndex) ? `slot-highlight ${getStatusClass(shuttleState.shuttle_action)}` : "slot-default";
 
   // Calculate total height for the shuttle track based on racks
   const getTrackHeight = () => {
