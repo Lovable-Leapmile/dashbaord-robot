@@ -65,9 +65,9 @@ const AdminConsole = () => {
             <div className="flex flex-col items-center justify-center text-center space-y-6">
               {/* Animated Settings Icon */}
               <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" style={{ animationDuration: "2s" }} />
-                <div className="relative bg-primary/10 rounded-full p-8 animate-pulse" style={{ animationDuration: "1.5s" }}>
-                  <Settings className="w-16 h-16 text-primary animate-spin" style={{ animationDuration: "8s" }} />
+                <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping animation-duration-2000" />
+                <div className="relative bg-primary/10 rounded-full p-8 animate-pulse animation-duration-1500">
+                  <Settings className="w-16 h-16 text-primary animate-spin animation-duration-8000" />
                 </div>
               </div>
 
@@ -82,21 +82,21 @@ const AdminConsole = () => {
                     Work in Progress
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground max-w-md animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                <p className="text-sm text-muted-foreground max-w-md animate-fade-in animation-delay-200">
                   We're actively working on it and will roll out the update soon.
                 </p>
               </div>
 
               {/* Animated Progress Indicator */}
               <div className="flex items-center gap-2 mt-4">
-                <div className="w-3 h-3 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
-                <div className="w-3 h-3 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
-                <div className="w-3 h-3 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="w-3 h-3 rounded-full bg-primary animate-bounce" />
+                <div className="w-3 h-3 rounded-full bg-primary animate-bounce animation-delay-150" />
+                <div className="w-3 h-3 rounded-full bg-primary animate-bounce animation-delay-300" />
               </div>
             </div>
           </div>
         ) : (
-          <div className="relative w-full" style={{ height: "calc(100vh - 130px)", minHeight: "400px" }}>
+          <div className="relative w-full wip-frame">
             {isLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
                 <div className="text-center space-y-3">

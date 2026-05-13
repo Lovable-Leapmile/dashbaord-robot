@@ -166,7 +166,7 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
                 </div>
               </SheetHeader>
               
-              <div className="py-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 65px)' }}>
+              <div className="py-2 overflow-y-auto mobile-sheet-scroll">
                 {/* Main Navigation */}
                 <div className="px-3 py-2">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Navigation</p>
@@ -276,11 +276,9 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             {mainNavItems.map((item) => (
               <span 
                 key={item.path}
-                className="text-base cursor-pointer hover:opacity-100 whitespace-nowrap relative group"
-                style={{ 
-                  color: item.active ? 'white' : 'rgba(255, 255, 255, 0.5)',
-                  fontWeight: item.active ? 600 : 400
-                }}
+                className={`text-base cursor-pointer hover:opacity-100 whitespace-nowrap relative group ${
+                  item.active ? "text-primary-foreground font-semibold" : "text-primary-foreground/50 font-normal"
+                }`}
                 onClick={() => navigate(item.path)}
               >
                 {item.label}
@@ -315,11 +313,9 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
-                  style={{ 
-                    backgroundColor: isLogsPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
-                    boxShadow: isLogsPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
-                  }}
+                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
+                    isLogsPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
+                  }`}
                   onClick={() => navigate("/logs")}
                 >
                   <ScrollText className="text-white w-[18px] h-[18px]" />
@@ -333,11 +329,9 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
-                  style={{ 
-                    backgroundColor: isMonitorPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
-                    boxShadow: isMonitorPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
-                  }}
+                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
+                    isMonitorPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
+                  }`}
                   onClick={() => navigate("/monitor")}
                 >
                   <Activity className="text-white w-[18px] h-[18px]" />
@@ -351,11 +345,9 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
             <Tooltip>
               <TooltipTrigger asChild>
                 <div 
-                  className="hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10"
-                  style={{ 
-                    backgroundColor: isMapPage ? 'rgba(255, 255, 255, 0.40)' : 'rgba(255, 255, 255, 0.20)', 
-                    boxShadow: isMapPage ? '0 0 0 2px rgba(255, 255, 255, 0.5)' : 'none'
-                  }}
+                  className={`hidden sm:flex rounded-full items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 hover:bg-white/30 w-10 h-10 ${
+                    isMapPage ? "bg-white/40 ring-2 ring-white/50" : "bg-white/20"
+                  }`}
                   onClick={() => navigate("/map")}
                 >
                   <MapPin className="text-white w-[18px] h-[18px]" />
@@ -385,15 +377,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
 
       {/* Desktop Sub-navigation for Configuration */}
       {selectedTab && !isTasksPage && !isCameraPage && !isReportsPage && !isLogsPage && (
-        <nav 
-          className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto"
-          style={{ backgroundColor: '#eeeeee', height: '55px' }}
-        >
+        <nav className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto subnav-bar">
           {configTabs.map((item) => (
             <span 
               key={item.tab}
-              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap" 
-              style={{ color: '#555' }}
+              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap subnav-link" 
               onClick={() => handleTabClick(item.tab)}
             >
               {item.label}
@@ -405,15 +393,11 @@ const AppHeader = ({ selectedTab, isTasksPage, activeTaskTab, isMonitorPage, isC
 
       {/* Desktop Sub-navigation for Tasks */}
       {isTasksPage && (
-        <nav 
-          className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto"
-          style={{ backgroundColor: '#eeeeee', height: '55px' }}
-        >
+        <nav className="hidden md:flex items-center px-6 gap-[8px] border-b border-gray-200 overflow-x-auto subnav-bar">
           {taskTabs.map((item) => (
             <span
               key={item.path}
-              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap"
-              style={{ color: '#555' }}
+              className="text-sm cursor-pointer px-5 py-2 rounded-md transition-all font-medium relative group whitespace-nowrap subnav-link"
               onClick={() => navigate(item.path)}
             >
               {item.label}

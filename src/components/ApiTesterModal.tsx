@@ -177,7 +177,7 @@ const ApiTesterModal = ({ open, onOpenChange }: ApiTesterModalProps) => {
             <Button
               type="submit"
               disabled={!isValid || isSubmitting}
-              style={{ backgroundColor: '#351C75' }}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {isSubmitting ? (
                 <>

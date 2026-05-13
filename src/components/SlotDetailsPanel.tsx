@@ -45,12 +45,7 @@ const SlotDetailsPanel = ({ slotDetails, isVisible }: SlotDetailsPanelProps) => 
   return (
     <>
       <div 
-        className="animate-slide-in-right"
-        style={{ 
-          width: '280px',
-          marginLeft: '30px',
-          borderRadius: '5px'
-        }}
+        className="animate-slide-in-right w-[280px] ml-[30px] rounded-[5px]"
       >
         <div className="flex items-center justify-between mb-6">
           <div className="text-xl font-semibold text-[#351c75]">
@@ -201,14 +196,7 @@ const SlotDetailsPanel = ({ slotDetails, isVisible }: SlotDetailsPanelProps) => 
       {/* QR Code Dialog */}
       <Dialog open={qrDialogOpen} onOpenChange={setQrDialogOpen}>
         <DialogContent 
-          className="p-0 gap-0" 
-          style={{ 
-            width: '275px', 
-            maxWidth: '275px',
-            height: '335px',
-            background: 'linear-gradient(135deg, #f3f0ff 0%, #ffffff 100%)',
-            border: '2px solid #351c75'
-          }}
+          className="p-0 gap-0 w-[275px] max-w-[275px] h-[335px] bg-gradient-to-br from-primary/10 to-background border-2 border-primary" 
         >
           {/* Row 1: Title with close button */}
           <div className="flex items-center justify-center relative px-6 pt-6 pb-2.5">

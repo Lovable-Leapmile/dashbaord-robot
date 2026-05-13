@@ -210,18 +210,17 @@ const Home = () => {
     shuttleState.shuttle_move_rack,
   ]);
 
-  // Get status color based on action
-  const getStatusColor = (action: string | null) => {
+  const getStatusClass = (action: string | null) => {
     if (!action || action === "Ongoing") {
-      return { bg: "transparent", border: "#166534" }; // dark green border for idle
+      return "status-idle";
     }
     if (action === "Stored" || action === "Retrieved") {
-      return { bg: "#22c55e", border: "#22c55e" }; // green for completed
+      return "status-complete";
     }
     if (action === "Storing" || action === "Retrieve") {
-      return { bg: "transparent", border: "#86efac" }; // light green border for in-progress
+      return "status-progress";
     }
-    return { bg: "transparent", border: "#166534" };
+    return "status-idle";
   };
 
   useEffect(() => {
@@ -314,25 +313,8 @@ const Home = () => {
     return store_row === rowIndex && store_rack === rackIndex && store_depth === depthIndex;
   };
 
-  // Get slot highlight styles based on shuttle action
-  const getSlotHighlightStyles = (rowIndex: number, rackIndex: number, depthIndex: number) => {
-    if (!isSlotHighlighted(rowIndex, rackIndex, depthIndex)) {
-      return {
-        backgroundColor: "#ffffff",
-        border: "1px solid #d1d5db",
-        boxShadow: "none",
-      };
-    }
-
-    const { shuttle_action } = shuttleState;
-    const statusColor = getStatusColor(shuttle_action);
-    
-    return {
-      backgroundColor: statusColor.bg === "transparent" ? "#dcfce7" : "#bbf7d0", // light green bg
-      border: `2px solid ${statusColor.border}`,
-      boxShadow: `0 0 8px rgba(34, 197, 94, 0.4)`,
-    };
-  };
+  const getSlotHighlightClass = (rowIndex: number, rackIndex: number, depthIndex: number) =>
+    isSlotHighlighted(rowIndex, rackIndex, depthIndex) ? `slot-highlight ${getStatusClass(shuttleState.shuttle_action)}` : "slot-default";
 
   // Calculate total height for the shuttle track based on racks
   const getTrackHeight = () => {
@@ -355,10 +337,6 @@ const Home = () => {
             <div 
               ref={rackContainerRef}
               className="overflow-x-hidden scroll-smooth scrollbar-hide rounded-lg mx-auto lg:mx-0"
-              style={{ 
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-              }}
             >
               {/* Combined Row 1, Shuttle Movement, and Row 0 with borders */}
               <div className="inline-flex bg-white rounded-lg border border-gray-200 shadow-sm">
@@ -376,13 +354,7 @@ const Home = () => {
                       {Array.from({ length: robotNumRacks }, (_, rackIdx) => (
                         <div
                           key={`row1-depth${depthIdx}-rack${rackIdx}`}
-                          className={`flex items-center justify-center text-xs sm:text-sm font-medium w-[60px] h-[22px] sm:w-[75px] sm:h-[25px] ${isSlotHighlighted(1, rackIdx, depthIdx) ? "animate-pulse-glow" : ""}`}
-                          style={{
-                            ...getSlotHighlightStyles(1, rackIdx, depthIdx),
-                            borderRadius: "4px",
-                            color: "#351c75",
-                            transition: "background-color 0.3s ease-in-out, border 0.3s ease-in-out",
-                          }}
+                          className={`flex items-center justify-center text-xs sm:text-sm font-medium w-[60px] h-[22px] sm:w-[75px] sm:h-[25px] rounded text-[#351c75] transition-colors duration-300 ${getSlotHighlightClass(1, rackIdx, depthIdx)} ${isSlotHighlighted(1, rackIdx, depthIdx) ? "animate-pulse-glow" : ""}`}
                         >
                           {rackIdx}
                         </div>
@@ -450,44 +422,15 @@ const Home = () => {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <div 
-                  className="flex flex-col justify-start"
-                  style={{ 
-                    minWidth: "70px",
-                    position: "relative",
-                    height: `${getTrackHeight()}px`,
-                  }}
-                >
+                <div className={`flex flex-col justify-start shuttle-track track-height-${robotNumRacks}`}>
                   {/* Vertical track line - spans same height as rows */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: 0,
-                      height: `${getTrackHeight()}px`,
-                      width: "2px",
-                      transform: "translateX(-50%)",
-                      backgroundColor: "#6b7280",
-                      opacity: 0.25,
-                      zIndex: 0,
-                    }}
-                  />
+                  <div className={`shuttle-track-line track-height-${robotNumRacks}`} />
 
                 {/* Single animated shuttle */}
                 {isShuttleVisible() ? (
                   <div
                     ref={shuttleRef}
-                    className="flex flex-col items-center justify-center"
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: 0,
-                      transform: `translate(-50%, ${animatedRackPosition}px)`,
-                      transition: "transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
-                      height: "25px",
-                      zIndex: 1,
-                      willChange: "transform",
-                    }}
+                    className={`flex flex-col items-center justify-center shuttle-marker shuttle-rack-${Math.round(animatedRackPosition / (SLOT_HEIGHT + SLOT_GAP))}`}
                   >
                     <TooltipProvider>
                       <Tooltip>
@@ -495,12 +438,7 @@ const Home = () => {
                           <img
                             src={getShuttleImage()}
                             alt="shuttle"
-                            className="cursor-pointer relative z-10"
-                            style={{
-                              width: "60px",
-                              height: "25px",
-                              objectFit: "contain",
-                            }}
+                            className="cursor-pointer relative z-10 w-[60px] h-[25px] object-contain"
                           />
                         </TooltipTrigger>
                         <TooltipContent 
@@ -536,18 +474,11 @@ const Home = () => {
                       className="absolute -bottom-4 flex items-center gap-1"
                     >
                       <span
-                        className="w-2 h-2 rounded-full"
-                        style={{
-                          backgroundColor: getStatusColor(shuttleState.shuttle_action).bg,
-                          border: `2px solid ${getStatusColor(shuttleState.shuttle_action).border}`,
-                        }}
+                        className={`w-2 h-2 rounded-full status-dot ${getStatusClass(shuttleState.shuttle_action)}`}
                       />
                       {shuttleState.shuttle_action && (
                         <span
-                          className="text-[8px] font-medium text-primary whitespace-nowrap"
-                          style={{
-                            textShadow: "0 0 2px rgba(255,255,255,0.8)",
-                          }}
+                          className="text-[8px] font-medium text-primary whitespace-nowrap shuttle-status-label"
                         >
                           {shuttleState.shuttle_action}
                         </span>
@@ -557,25 +488,12 @@ const Home = () => {
                 ) : (
                   /* Fallback: Show es-left.png on first rack when API returns null/404 */
                   <div
-                    className="flex flex-col items-center justify-center"
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: 0,
-                      transform: `translate(-50%, ${calculateYPosition(0)}px)`,
-                      height: "25px",
-                      zIndex: 1,
-                    }}
+                    className="flex flex-col items-center justify-center shuttle-marker shuttle-rack-0"
                   >
                     <img
                       src={esRight}
                       alt="shuttle"
-                      className="relative z-10"
-                      style={{
-                        width: "60px",
-                        height: "25px",
-                        objectFit: "contain",
-                      }}
+                      className="relative z-10 w-[60px] h-[25px] object-contain"
                     />
                   </div>
                 )}
@@ -595,13 +513,7 @@ const Home = () => {
                       {Array.from({ length: robotNumRacks }, (_, rackIdx) => (
                         <div
                           key={`row0-depth${depthIdx}-rack${rackIdx}`}
-                          className={`flex items-center justify-center text-xs sm:text-sm font-medium w-[60px] h-[22px] sm:w-[75px] sm:h-[25px] ${isSlotHighlighted(0, rackIdx, depthIdx) ? "animate-pulse-glow" : ""}`}
-                          style={{
-                            ...getSlotHighlightStyles(0, rackIdx, depthIdx),
-                            borderRadius: "4px",
-                            color: "#351c75",
-                            transition: "background-color 0.3s ease-in-out, border 0.3s ease-in-out",
-                          }}
+                          className={`flex items-center justify-center text-xs sm:text-sm font-medium w-[60px] h-[22px] sm:w-[75px] sm:h-[25px] rounded text-[#351c75] transition-colors duration-300 ${getSlotHighlightClass(0, rackIdx, depthIdx)} ${isSlotHighlighted(0, rackIdx, depthIdx) ? "animate-pulse-glow" : ""}`}
                         >
                           {rackIdx}
                         </div>
@@ -635,11 +547,7 @@ const Home = () => {
                       >
                         <div className="flex items-center gap-1 text-[10px]">
                           <span
-                            className="w-1.5 h-1.5 rounded-full shrink-0"
-                            style={{
-                              backgroundColor: getStatusColor(item.action).bg,
-                              border: `1.5px solid ${getStatusColor(item.action).border}`,
-                            }}
+                            className={`w-1.5 h-1.5 rounded-full shrink-0 status-dot-small ${getStatusClass(item.action)}`}
                           />
                           <span className="font-medium text-foreground">{item.action}</span>
                           <span className="text-muted-foreground ml-auto text-[9px]">
