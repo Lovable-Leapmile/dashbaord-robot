@@ -13,23 +13,11 @@ const Index = () => {
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          width: "100%",
-          height: "100vh",
-        }}
+        className="absolute inset-0 w-full h-screen bg-cover bg-center bg-no-repeat login-bg-image"
       />
 
       {/* Semi-transparent Overlay */}
-      <div
-        className="absolute inset-0 w-full h-full"
-        style={{
-          backgroundColor: "#351c7526",
-          width: "100%",
-          height: "100%",
-        }}
-      />
+      <div className="absolute inset-0 w-full h-full bg-primary/15" />
 
       {/* Login Form Container */}
       <div className="relative z-10 flex items-center justify-center min-h-screen py-8 animate-fade-in">
